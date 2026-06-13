@@ -4,6 +4,7 @@ import { __dirname, __filename } from './config.js';
 import { getAllFiles } from "./src/core/fileLoader.js";
 import { parseFile } from "./src/core/fileParser.js";
 import {graphBuilder} from "./src/core/graphBuilder.js";
+import { generateInsight } from "./src/core/insightEngine.js";
 
 const TARGET_DIR = path.join(__dirname, "test-project");
 
@@ -28,6 +29,12 @@ function run() {
 
   console.log("\nGraph Output:\n");
   console.log(JSON.stringify(Object.entries(graph).slice(0, 3), null, 2));
+
+  const insights = generateInsight(graph);
+
+  console.log("\nInsights:\n");
+  console.log(JSON.stringify(insights, null, 2));
+
 }
 
 run();
