@@ -25,7 +25,7 @@ function generateInsight(graph){
             insights["Highly Coupled Files"].push(file);
         }
 
-        if(importedByCount == 0 && importCount == 0) {  
+        if(importedByCount == 0 && importCount == 0 && !file.includes("app") && !file.includes("index")) {  
             insights["Unused Files"].push(file);
         }
 
