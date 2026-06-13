@@ -5,7 +5,7 @@ function parseFile(filePath) {
     const fileContent = fs.readFileSync(filePath, 'utf-8');
 
     const ast = path.parse(fileContent, {
-        sourceType: 'module',
+        sourceType: 'unambiguous',
         plugins: ['jsx', 'typescript'],
     });
 
@@ -14,6 +14,8 @@ function parseFile(filePath) {
         function: [],
         imports: [],
         exports: [],
+        lines: fileContent.split('\n').length,
+        hasDefaultExport: false,
     }
 
     traverseAST(ast, result);
@@ -23,6 +25,19 @@ function parseFile(filePath) {
 
 function traverseAST(node, result) {
     if (!node || typeof node != 'object') return;
+
+    if (
+        node.type === "CallExpression" &&
+        node.callee &&
+        node.callee.name === "require"
+    ) {
+        if (node.arguments && node.arguments.length > 0) {
+            const arg = node.arguments[0];
+            if (arg.type === "StringLiteral") {
+                result.imports.push(arg.value);
+            }
+        }
+    }
 
     // Detect imports
 
