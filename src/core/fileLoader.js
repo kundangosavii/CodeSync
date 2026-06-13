@@ -3,7 +3,7 @@ import path from 'path';
 
 const SUPPORTED_EXTENSIONS = ['.js', '.ts', '.jsx', '.tsx', '.json'];
 
-
+const IGNORED_DIRS = ["node_modules", ".git", "dist", "build", ".next"];
 
 export function getAllFiles(dirPath, arrayOfFiles = []) {
     const files = fs.readdirSync(dirPath);
@@ -15,10 +15,10 @@ export function getAllFiles(dirPath, arrayOfFiles = []) {
             getAllFiles(filePath, arrayOfFiles);
         } else {
             const ext = path.extname(file);
-            if(SUPPORTED_EXTENSIONS.includes(ext)) {
+            if (SUPPORTED_EXTENSIONS.includes(ext)) {
                 arrayOfFiles.push(filePath);
             }
-        }   
+        }
     });
 
     return arrayOfFiles;

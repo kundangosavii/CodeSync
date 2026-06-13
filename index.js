@@ -6,10 +6,20 @@ import { parseFile } from "./src/core/fileParser.js";
 import { graphBuilder } from "./src/core/graphBuilder.js";
 import { generateInsight } from "./src/core/insightEngine.js";
 import { generateReadableInsights } from "./src/core/outputEngine.js";
+import { cloneRepo } from "./src/core/repoCloner.js";
 
 const TARGET_DIR = path.join(__dirname, "test-project");
 
-function run() {
+async function run() {
+  // const repoUrl = process.argv[2]
+
+  // if(!repoUrl) {
+  //   console.error("Please provide a repository URL as an argument.");
+  // }
+
+
+  // const repoPath = await cloneRepo(repoUrl);
+
   console.log("Scanning files...\n");
 
   const files = getAllFiles(TARGET_DIR);
