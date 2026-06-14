@@ -54,21 +54,24 @@ function run() {
     console.log(`${i + 1}. ${msg}`);
   });
   
-  const date = new Date();
-  const dateString = date.toLocaleString();
+  // const date = new Date();
+  // const dateString = date.toLocaleString();
 
-  const formattedDate = dateString.split(",")[1].trim();
+  // const formattedDate = dateString.split(",")[1].trim();
 
-  const generateUniqeId = () => {
-    return TARGET_DIR.split(path.sep).pop() + "_" + formattedDate.replace(/[:\s]/g, "").replace('pm', "");
-  }
+  // const generateUniqeId = () => {
+  //   return TARGET_DIR.split(path.sep).pop() + "_" + formattedDate.replace(/[:\s]/g, "").replace('pm', "");
+  // }
 
-  const UniqueId = generateUniqeId();
+  // const UniqueId = generateUniqeId();
 
-  saveGraph(UniqueId, graph);
-  saveInsights(UniqueId, insights);
-  saveReadableInsights(UniqueId, ReadableInsights);
+  saveGraph(TARGET_DIR, graph);
+  saveInsights(TARGET_DIR, insights);
+  saveReadableInsights(TARGET_DIR, ReadableInsights);
+
+
+  // return UniqueId;
 
 }
 
-export { run}
+export { run }
