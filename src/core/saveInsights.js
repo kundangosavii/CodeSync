@@ -2,11 +2,11 @@ import fs from 'node:fs'
 import path from 'path'
 import { __dirname, __filename } from '../../config.js';
 
+const basePath = __dirname
+
+const newRepo = path.join(basePath, 'repos')
 
 function saveGraph(TARGET_DIR, graph) {
-    const basePath = __dirname
-
-    const newRepo = path.join(basePath, 'repos')
 
     try {
         const repoPath = path.join(newRepo, path.basename(TARGET_DIR))
@@ -42,8 +42,6 @@ function saveGraph(TARGET_DIR, graph) {
 }
 
 function saveInsights(TARGET_DIR, insights) {
-    const basePath = __dirname
-    const newRepo = path.join(basePath, 'repos')
     try {
         const repoPath = path.join(newRepo, path.basename(TARGET_DIR))
         const fullRepoPath = path.join(repoPath, 'insights.json')
@@ -77,8 +75,6 @@ function saveInsights(TARGET_DIR, insights) {
 }
 
 function saveReadableInsights(TARGET_DIR, readableInsights) {
-    const basePath = __dirname
-    const newRepo = path.join(basePath, 'repos')
     try {
         const repoPath = path.join(newRepo, path.basename(TARGET_DIR))
         const fullRepoPath = path.join(repoPath, 'readableInsights.txt')
@@ -109,4 +105,8 @@ function saveReadableInsights(TARGET_DIR, readableInsights) {
     }
 }
 
-export { saveGraph, saveInsights, saveReadableInsights }
+export { 
+    saveGraph, 
+    saveInsights, 
+    saveReadableInsights 
+}
