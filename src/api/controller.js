@@ -4,7 +4,9 @@ import fs from 'node:fs';
 const analyzeController = (req, res) => {
     try {
         run();
-        res.status(200).json({ message: 'Code analysis completed successfully.' });
+        res.status(200).json({ 
+            message: 'Code analysis completed successfully.' 
+        });
     } catch (error) {
         console.error('Error during code analysis:', error);
         res.status(500).json({ message: 'An error occurred during code analysis.' });
@@ -13,7 +15,6 @@ const analyzeController = (req, res) => {
 
 const getInsightsController = (req, res) => {
     try {
-        const repoId = req.repoId; 
 
         fs.readFile(`C:/code-analyser/repos/test-project/insights.json`, 'utf-8', (err, data) => {
             if (err) {
