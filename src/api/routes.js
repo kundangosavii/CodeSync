@@ -1,5 +1,10 @@
 import { Router } from 'express'
-import { analyzeController, getInsightsController } from './controller.js'
+import { 
+    analyzeController, 
+    getInsightsController,
+    getReadableInsightsController,
+    getGraphController
+} from './controller.js'
 
 const router = Router()
 
