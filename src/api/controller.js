@@ -17,22 +17,26 @@ const analyzeController = (req, res) => {
             return TARGET_DIR.split(path.sep).pop() + "_" + formattedDate.replace(/[:\s]/g, "").replace('pm', "");
         }
 
-        if (fs.existsSync(`C:/code-analyser/repos/test-project`)) {
+        const repoPath = TARGET_DIR.split(path.sep).pop()
+        if (fs.existsSync(`C:/code-analyser/repos/${repoPath}`)) {
             console.log("repo already analyzed")
             fs.readFile(registerPath, 'utf-8', (err, data) => {
                 if (err) {
                     console.log("Error ocurred while reading the file")
                 } else {
                     const jsonData = JSON.parse(data);
-                    const UniqueId = jsonData.UniqueId;
-                    console.log("UniqueId getted successfully")
+                    let UniqueId = null;
+                    if (jsonData.repoName === repoPath) {
+                        UniqueId = jsonData.UniqueId;
+                    }
+
+                    res.status(200).json({
+                        message: 'Repository has already been analyzed.',
+                        UniqueId
+                    })
                 }
             });
 
-            res.status(200).json({
-                message: 'Repository has already been analyzed.',
-                UniqueId
-            })
         }
         else {
             run()
