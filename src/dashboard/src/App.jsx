@@ -1,22 +1,28 @@
 import { useState } from 'react'
 import './App.css'
 
+import { analyzeRepo, getInsights } from './api.js'
+
 export default function App() {
   const [repoInput, setRepoInput] = useState("");
   const [repos, setRepos] = useState([
-    { repoId: "repo_2", name: "test-repo" }
+    { repoId: "repo_2", name: "test-repo" },
+    { repoId: "test-project_32126", name:"test-project" }
   ]);
   const [selectedRepo, setSelectedRepo] = useState(null);
   const [insights, setInsights] = useState([]);
 
   const handleAnalyze = () => {
     // TODO: call /analyze API
+    const repoInput = analyzeRepo()
     console.log("Analyze:", repoInput);
   };
 
   const handleSelectRepo = (repo) => {
     setSelectedRepo(repo);
     // TODO: call /insights API using repo.repoId
+    const Insights = getInsights(repo.repoId)
+    console.log("Insights:", Insights)
   };
 
   return (
