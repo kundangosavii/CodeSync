@@ -18,11 +18,12 @@ export default function App() {
     console.log("Analyze:", repoInput);
   };
 
-  const handleSelectRepo = (repo) => {
+  const  handleSelectRepo = async (repo) => {
     setSelectedRepo(repo);
     // TODO: call /insights API using repo.repoId
-    const Insights = getInsights(repo.repoId)
-    console.log("Insights:", Insights)
+    console.log(repo.repoId)
+    const insights = await getInsights(repo.repoId)
+    console.log("Insights:", insights)
   };
 
   return (
@@ -89,6 +90,7 @@ export default function App() {
               {item}
             </div>
           ))}
+
         </div>
       </div>
     </div>
