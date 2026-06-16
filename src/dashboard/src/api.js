@@ -1,0 +1,28 @@
+const Base_URL = '/api';
+
+async function handleRespone(response) {
+    if (!response.ok) {
+        const errorData = await response.text();
+        throw new Error(errorData.error || 'An error occurred');
+    }
+    return response.json();
+}
+
+// Analyze a repository 
+
+export async function analyzeRepo() {
+    const response = await fetch(`${Base_URL}/analyze`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+    return handleRespone(response);
+}
+
+export async function getInsights(repoId) {
+  const res = await fetch(`${BASE_URL}/insights?repoId=${repoId}`);
+  return handleResponse(res);
+}
+    
+
