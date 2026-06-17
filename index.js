@@ -65,5 +65,5 @@ function run() {
 
 }
 
-run();
-// export { run }
+// run();
+export { run }
