@@ -4,7 +4,7 @@ function transformGraph(graphJson){
     const edgeSet = new Set()
 
     for(const file in graphJson){
-        node.push(
+        nodes.push(
             {
                 data: {
                     id: file,
