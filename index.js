@@ -8,7 +8,8 @@ import { graphBuilder } from "./src/core/graphBuilder.js";
 import { generateInsight } from "./src/core/insightEngine.js";
 import { generateReadableInsights } from "./src/core/outputEngine.js";
 import { cloneRepo } from "./src/core/repoCloner.js";
-import { saveGraph, saveInsights, saveReadableInsights } from "./src/core/saveInsights.js";
+import { saveGraph, saveInsights, saveReadableInsights, saveGraphInNodeAndEdgesFormat } from "./src/core/saveInsights.js";
+import { transformGraph } from "./src/core/graphTransformation.js";
 
 const TARGET_DIR = path.join(__dirname, "test-project");
 
@@ -55,12 +56,14 @@ function run() {
     console.log(`${i + 1}. ${msg}`);
   });
   
+  const graphNodesEdges = transformGraph(graph)
 
   saveGraph(TARGET_DIR, graph);
   saveInsights(TARGET_DIR, insights);
   saveReadableInsights(TARGET_DIR, ReadableInsights);
+  saveGraphInNodeAndEdgesFormat(TARGET_DIR, graphNodesEdges);
 
 }
 
-// run();
-export { run }
+run();
+// export { run }
