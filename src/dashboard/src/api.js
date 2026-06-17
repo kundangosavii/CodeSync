@@ -29,5 +29,14 @@ export async function getInsights(repoId) {
   });
   return handleRespone(res);
 }
-    
+
+export async function getGraph(repoId) {
+  const res = await fetch(`${Base_URL}/graphNodesEdges?repoId=${repoId}`,{
+    method: 'GET',
+    headers: {
+        'Content-Type': 'application/json',
+    }
+  });
+  return handleRespone(res);
+}
 
