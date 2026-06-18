@@ -28,14 +28,14 @@ export default function Graph({ graphData }) {
 
         {
           selector: 'node[type="services"]',
-          style:{
+          style: {
             "background-color": "green"
           },
         },
 
         {
           selector: 'node[type="utils"]',
-          style:{
+          style: {
             "background-color": "yellow"
           },
         },
@@ -43,10 +43,10 @@ export default function Graph({ graphData }) {
         {
           selector: "edge",
           style: {
-            width: 2,
-            "line-color": "#ccc",
-            "target-arrow-shape": "triangle",
-            "target-arrow-color": "#ccc",
+            width: 1,
+            'line-color': '#000000',
+            'target-arrow-color': '#ccc',
+            'target-arrow-shape': 'triangle'
           },
         },
       ],
@@ -55,6 +55,9 @@ export default function Graph({ graphData }) {
         name: "cose", // start simple
       },
     });
+
+    // cy.zoomingEnabled( false );
+    // cy.userZoomingEnabled( true );
 
     return () => cy.destroy(); // cleanup
   }, [graphData]);
