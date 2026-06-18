@@ -4,11 +4,16 @@ function transformGraph(graphJson){
     const edgeSet = new Set()
 
     for(const file in graphJson){
+        const result = file.split("\\")
+        const label=result.pop()
+        const type=result.pop()
+        console.log(label, type)
         nodes.push(
             {
                 data: {
                     id: file,
-                    label : file.split("\\").pop()
+                    label : label,
+                    type: type
                 }
             }
         )
