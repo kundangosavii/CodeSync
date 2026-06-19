@@ -30,26 +30,11 @@ function impactAnalysis(TARGET_DIR) {
                 const [indirectImpacts, directImpacts] = getIndirectImpact(graphJson, file);
 
 
-
-                // indirectImpacts.forEach(indirect => {
-                //     if (!indirect.includes(indirect)) {
-                        
-                //     }
-                // });
-                // directImpacts.forEach(direct => {
-                //     if (!direct.includes(direct)) {
-                //         direct.push(direct);
-                //     }
-                // });
-
-                console.log(directImpacts)
-                console.log(indirectImpacts)
-
-                const fileName = file.split('\\').pop();
                 const directName = directImpacts.map(imp => imp.split('\\').pop());
                 const indirectName = indirectImpacts.map(imp => imp.split('\\').pop());
                 const Data = {
-                    file: fileName,
+                    file: file,
+                    lable: file.split('\\').pop(),
                     direct: directName.join(', '),
                     indirect: indirectName.join(', ')
                 };
