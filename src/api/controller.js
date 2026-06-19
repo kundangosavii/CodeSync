@@ -153,9 +153,8 @@ const getGraphWithNodeAndEdgeController = (req, res, repoId) => {
 
 const getImpactAnalysisController = (req, res) => {
     try {
-        const {repoId, filePath} = req.query;
-        // const filePath = req.query.file;
-
+        const {repoId, file} = req.query;
+        
         const repoName = repoId.split("_").slice(0, -1).join("_");
 
         fs.readFile(`C:/code-analyser/repos/${repoName}/impactAnalysis.json`, 'utf-8', (err, data) => {
@@ -163,11 +162,10 @@ const getImpactAnalysisController = (req, res) => {
                 console.error('Error reading Impact Analysis file:', err);
                 return res.status(500).json({ message: 'An error occurred while fetching impact analysis data.' });
             }
-
+            
+            const fileName = path.normalize(file);
             const impctAnalysis = JSON.parse(data);
-            const result = impctAnalysis[filePath]
-            console.log(result) 
-            console.log(filePath)
+            const result = impctAnalysis.filter(item => path.normalize(item.file) === fileName);
             res.status(200).json(result);
         });
     }
