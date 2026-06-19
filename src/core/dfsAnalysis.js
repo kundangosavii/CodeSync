@@ -5,8 +5,8 @@ function getIndirectImpact(graphJson, startfile) {
     function dfs(file) {
         const dependents = graphJson[file]?.importedBy || [];
 
-        for(const dep of dependents) {
-            if(!visited.has(dep)) {
+        for (const dep of dependents) {
+            if (!visited.has(dep)) {
                 visited.add(dep);
                 indirect.add(dep);
                 dfs(dep);
@@ -14,8 +14,16 @@ function getIndirectImpact(graphJson, startfile) {
         }
     }
 
+    visited.add(startfile); // prevent self-loop
     dfs(startfile);
-    return Array.from(indirect);
+
+    const direct = graphJson[startfile]?.importedBy || [];
+
+    const indirects = Array.from(indirect).filter(
+        file => !direct.includes(file)
+    );
+
+    return [indirects, direct];
 }
 
-export { getIndirectImpact }
+export { getIndirectImpact };
