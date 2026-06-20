@@ -1,36 +1,37 @@
 [
   {
-    "file": "app.js",
-    "direct": "userController.js",
-    "indirect": []
-  },
-  {
-    "file": "high.Controller.js",
+    "file": "C:\\code-analyser\\test-project\\app.js",
+    "label": "app.js",
     "direct": "",
-    "indirect": []
+    "indirect": "",
+    "totalImpactedFiles": 0
   },
   {
-    "file": "userController.js",
-    "direct": "userService.js, userService.js",
-    "indirect": [
-      "app.js"
-    ]
-  },
-  {
-    "file": "userService.js",
-    "direct": "helper.js",
-    "indirect": [
-      "app.js",
-      "userController.js"
-    ]
-  },
-  {
-    "file": "helper.js",
+    "file": "C:\\code-analyser\\test-project\\controllers\\high.Controller.js",
+    "label": "high.Controller.js",
     "direct": "",
-    "indirect": [
-      "userController.js",
-      "app.js",
-      "userService.js"
-    ]
+    "indirect": "",
+    "totalImpactedFiles": 0
+  },
+  {
+    "file": "C:\\code-analyser\\test-project\\controllers\\userController.js",
+    "label": "userController.js",
+    "direct": "app.js",
+    "indirect": "",
+    "totalImpactedFiles": 1
+  },
+  {
+    "file": "C:\\code-analyser\\test-project\\services\\userService.js",
+    "label": "userService.js",
+    "direct": "userController.js, userController.js",
+    "indirect": "app.js",
+    "totalImpactedFiles": 3
+  },
+  {
+    "file": "C:\\code-analyser\\test-project\\utils\\helper.js",
+    "label": "helper.js",
+    "direct": "userService.js",
+    "indirect": "userController.js, app.js",
+    "totalImpactedFiles": 3
   }
 ]
