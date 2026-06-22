@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import cytoscape from "cytoscape";
 
-export default function Graph({ graphData }) {
+export default function Graph({ graphData, onNodeClick }) {
   const cyRef = useRef(null);
 
   useEffect(() => {
@@ -58,6 +58,11 @@ export default function Graph({ graphData }) {
 
     // cy.zoomingEnabled( false );
     // cy.userZoomingEnabled( true );
+
+    cy.on("tap", "node", (event) => {
+      const filePath = event.target.id();
+      onNodeClick(filePath);
+    });
 
     return () => cy.destroy(); // cleanup
   }, [graphData]);
