@@ -49,3 +49,13 @@ export async function getImpact(repoId, filePath) {
     });
     return handleRespone(res);
 }
+
+export async function getDeadCode(repoId) {
+    const res = await fetch(`${Base_URL}/dead-code?repoId=${repoId}`,{
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+        });
+    return handleRespone(res);
+}
