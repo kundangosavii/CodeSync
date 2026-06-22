@@ -63,4 +63,66 @@ function detectCycles(graph) {
   return cycles;
 }
 
-export { getIndirectImpact, detectCycles };
+function calculateDepth(graph) {
+  const memo = {};
+  const visiting = new Set();
+
+  function dfs(node) {
+    if (memo[node] !== undefined) return memo[node];
+
+    if (visiting.has(node)) {
+      return 0; 
+    }
+
+    visiting.add(node);
+
+    const dependents = graph[node]?.importedBy || [];
+
+    let maxDepth = 0;
+
+    for (const dep of dependents) {
+      maxDepth = Math.max(maxDepth, dfs(dep));
+    }
+
+    visiting.delete(node);
+
+    memo[node] = dependents.length === 0 ? 0 : 1 + maxDepth;
+
+    return memo[node];
+  }
+
+  const result = {};
+
+  for (const node in graph) {
+    result[node] = dfs(node);
+  }
+
+  return result;
+}
+
+function calculateComplexity(graph, depthMap, cycles) {
+    const cycleSet = new Set(cycles.flat());
+
+    const complexityScores = {};
+
+    for(const node in graph) {
+        const imports = graph[node]?.imports.length || 0;
+        const importedBy = graph[node]?.importedBy.length || 0;
+        const depth = depthMap[node] || 0;
+        const inCycle = cycleSet.has(node);
+
+        const score = (imports * 1) + (importedBy * 2) + (depth * 3) + (inCycle ? 5 : 0);
+
+        complexityScores[node] = {
+            imports,
+            importedBy,
+            depth,
+            inCycle,
+            complexityScore: score
+        };
+    }
+
+    return complexityScores;
+}
+
+export { getIndirectImpact, detectCycles, calculateDepth, calculateComplexity };
