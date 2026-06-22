@@ -1,3 +1,5 @@
+import { fetchUserData } from "../services/userService.js";
+
 export function formatUser(user) {
   return {
     ...user,
