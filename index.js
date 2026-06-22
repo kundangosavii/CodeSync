@@ -8,10 +8,10 @@ import { graphBuilder } from "./src/core/graphBuilder.js";
 import { generateInsight } from "./src/core/insightEngine.js";
 import { generateReadableInsights } from "./src/core/outputEngine.js";
 import { cloneRepo } from "./src/core/repoCloner.js";
-import { saveGraph, saveInsights, saveReadableInsights, saveGraphInNodeAndEdgesFormat, saveCyle } from "./src/core/saveInsights.js";
+import { saveGraph, saveInsights, saveReadableInsights, saveGraphInNodeAndEdgesFormat, saveCycle, saveComplexity } from "./src/core/saveInsights.js";
 import { transformGraph } from "./src/core/graphTransformation.js";
 import { impactAnalysis } from "./src/core/impactAnalysis.js";
-import { detectCycles } from "./src/core/dfsAnalysis.js";
+import { detectCycles, calculateDepth, calculateComplexity } from "./src/core/dfsAnalysis.js";
 
 const TARGET_DIR = path.join(__dirname, "test-project");
 
@@ -61,13 +61,16 @@ function run() {
   const graphNodesEdges = transformGraph(graph)
 
   const cycle = detectCycles(graph)
+  const depth = calculateDepth(graph)
+  const complexity = calculateComplexity(graph, depth, cycle)
 
   saveGraph(TARGET_DIR, graph);
   saveInsights(TARGET_DIR, insights);
   saveReadableInsights(TARGET_DIR, ReadableInsights);
   saveGraphInNodeAndEdgesFormat(TARGET_DIR, graphNodesEdges);
-  saveCyle(TARGET_DIR, cycle)
-  
+  saveCycle(TARGET_DIR, cycle);
+  saveComplexity(TARGET_DIR, complexity);
+
   impactAnalysis(TARGET_DIR);
 
 }
