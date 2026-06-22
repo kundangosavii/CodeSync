@@ -1,18 +1,20 @@
 import { useState } from 'react'
 import './App.css'
 
-import { analyzeRepo, getInsights, getGraph } from './api.js'
+import { analyzeRepo, getInsights, getGraph, getImpact } from './api.js'
 import Graph from "./components/Graph.jsx";
 
 export default function App() {
   const [repoInput, setRepoInput] = useState("");
   const [repos, setRepos] = useState([
     { repoId: "repo_2", name: "test-repo" },
-    { repoId: "test-project_32126", name:"test-project" }
+    { repoId: "test-project_32126", name: "test-project" }
   ]);
   const [selectedRepo, setSelectedRepo] = useState(null);
   const [insights, setInsights] = useState([]);
   const [graphData, setGraphData] = useState(null)
+
+  const [impact, setImpact] = useState([]);
 
   const handleAnalyze = () => {
     const repoInput = analyzeRepo()
@@ -32,9 +34,21 @@ export default function App() {
 
   };
 
+  const handleNodeClick = async (filePath) => {
+    try {
+      const repo = selectedRepo
+      const impact = await getImpact(repo.repoId, filePath);
+      setImpact(impact);
+      console.log(impact)
+      console.log(impact.length)
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <div className="h-screen flex bg-gray-100">
-      
+
       {/* Sidebar */}
       <div className="w-1/4 bg-white border-r p-4 overflow-y-auto">
         <h2 className="text-lg font-bold mb-4">Repositories</h2>
@@ -43,11 +57,10 @@ export default function App() {
           <div
             key={repo.repoId}
             onClick={() => handleSelectRepo(repo)}
-            className={`p-2 mb-2 rounded cursor-pointer ${
-              selectedRepo?.repoId === repo.repoId
-                ? "bg-blue-100"
-                : "hover:bg-gray-100"
-            }`}
+            className={`p-2 mb-2 rounded cursor-pointer ${selectedRepo?.repoId === repo.repoId
+              ? "bg-blue-100"
+              : "hover:bg-gray-100"
+              }`}
           >
             {repo.name}
           </div>
@@ -56,7 +69,7 @@ export default function App() {
 
       {/* Main Content */}
       <div className="flex-1 p-6 flex flex-col">
-        
+
         <div className="mb-6">
           <h1 className="text-2xl font-bold mb-2">Code Analyzer Dashboard</h1>
           <div className="flex gap-2">
@@ -99,7 +112,23 @@ export default function App() {
 
           <h2 className="text-lg font-semibold mb-3 mt-5">Graph Visualization</h2>
 
-          <Graph graphData={graphData} />
+          <Graph graphData={graphData} onNodeClick={handleNodeClick} />
+
+          {impact && impact.length > 0 && impact.map((item, index) => {
+            return (
+              <div key={index} className='p-3 border mb-2 mt-5'>
+                <h1 className='text-red-600 font-bold text-2xl underline'>Impact Analysis</h1>
+
+                <p className='mt-5'><strong>Direct:</strong></p>
+                <div>{item.direct}</div>
+
+                <p className='mt-5'><strong>Indirect:</strong></p>
+                <div>{item.indirect}</div>
+
+                <p className='mt-5'><strong>Total Impacted Files:  </strong>{item.totalImpactedFiles}</p>
+              </div>
+            );
+          })}
 
         </div>
       </div>
