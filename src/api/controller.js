@@ -237,7 +237,8 @@ const getAIInsightsController = async (req, res) => {
 
         const insightsContent = fs.readFileSync(`C:/code-analyser/repos/${repoName}/insights.json`, 'utf8');
         const insightsData = JSON.parse(insightsContent);
-        const deadcode = insights.UnusedFiles
+        const deadcode = insightsData.UnusedFiles
+
 
         const cyclesContent = fs.readFileSync(`C:/code-analyser/repos/${repoName}/cycle.json`, 'utf8');
         const cycles = JSON.parse(cyclesContent);
@@ -245,11 +246,14 @@ const getAIInsightsController = async (req, res) => {
         const complexityContent = fs.readFileSync(`C:/code-analyser/repos/${repoName}/complexity.json`, 'utf8');
         const complexity = JSON.parse(complexityContent);
 
+        console.log(Object.keys(complexity));
+        console.log(Object.values(complexity));
+        
         const impactContent = fs.readFileSync(`C:/code-analyser/repos/${repoName}/impactAnalysis.json`, 'utf8');
         const impact = JSON.parse(impactContent);
 
         const analysisData = {
-            deadCode,
+            deadcode,
             cycles,
             complexity,
             impact
