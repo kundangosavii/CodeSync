@@ -1,10 +1,14 @@
-import express from 'express'
 import dotenv from 'dotenv'
-
 dotenv.config()
+
+import express from 'express'
+
+
 const app = express()
 
 app.use(express.json())
+
+
 import { analyzeController, getInsightsController } from './controller.js'
 import approuter from './routes.js'
 
