@@ -9,7 +9,8 @@ export default function App() {
   const [repoInput, setRepoInput] = useState("");
   const [repos, setRepos] = useState([
     { repoId: "repo_2", name: "test-repo" },
-    { repoId: "test-project_32126", name: "test-project" }
+    { repoId: "test-project_32126", name: "test-project" },
+    { repoId: "src_103412", name: "src" }
   ]);
   const [selectedRepo, setSelectedRepo] = useState(null);
   const [insights, setInsights] = useState([]);
