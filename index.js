@@ -13,15 +13,15 @@ import { transformGraph } from "./src/core/graphTransformation.js";
 import { impactAnalysis } from "./src/core/impactAnalysis.js";
 import { detectCycles, calculateDepth, calculateComplexity } from "./src/core/dfsAnalysis.js";
 
-const TARGET_DIR = "C:\\web devolapment\\courseMart_project\\courseMart\\backend\\src";
 
-const resolved = path.resolve(TARGET_DIR);
 
-console.log("RAW:", TARGET_DIR);
-console.log("RESOLVED:", resolved);
-console.log("EXISTS:", fs.existsSync(resolved));
-
-function run() {
+function run(repoUrl) {
+  const TARGET_DIR = process.argv[2] || repoUrl;
+  const resolved = path.resolve(TARGET_DIR);
+  
+  console.log("RAW:", TARGET_DIR);
+  console.log("RESOLVED:", resolved);
+  console.log("EXISTS:", fs.existsSync(resolved));
   // const repoUrl = process.argv[2]
 
   // if(!repoUrl) {
