@@ -80,3 +80,13 @@ export async function getAIInsights(repoId) {
     });
     return handleRespone(res);
 }
+
+export async function getRepos() {
+    const res = await fetch(`${Base_URL}/repos`,{
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+    return handleRespone(res);
+}
