@@ -7,7 +7,9 @@ import { llmService } from './services/llmService.js';
 
 const analyzeController = (req, res) => {
     try {
-        const TARGET_DIR = path.join(__dirname, "test-project");
+        const repoUrl = req.body.repoUrl;
+        console.log("Received repoUrl:", repoUrl);
+        const TARGET_DIR = repoUrl;
         const registerPath = path.join(__dirname, "repos", "register.json");
 
         const date = new Date();
@@ -41,7 +43,7 @@ const analyzeController = (req, res) => {
 
         }
         else {
-            run()
+            run(repoUrl)
             const UniqueId = generateUniqeId();
             const data = {
                 repoName: path.basename(TARGET_DIR),

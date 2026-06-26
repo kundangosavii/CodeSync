@@ -13,7 +13,7 @@ import {
 
 const router = Router()
 
-router.get('/analyze', analyzeController);
+router.post('/analyze', analyzeController);
 router.get('/insights', getInsightsController);
 router.get('/readable-insights', getReadableInsightsController);
 router.get('/graph', getGraphController);
