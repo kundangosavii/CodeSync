@@ -284,6 +284,29 @@ const getAIInsightsController = async (req, res) => {
         res.status(500).json({ message: 'An error occurred while fetching AI insights.' });
     }
 };
+
+const getReposController = (req, res) => {
+    try {
+        const registerPath = path.join(__dirname, "repos", "register.json");
+
+        if (fs.existsSync(registerPath)) {
+            const content = fs.readFileSync(registerPath, "utf-8");
+            const data = content ? JSON.parse(content) : [];
+
+            res.status(200).json(
+                data.map(r => ({
+                    repoId: r.UniqueId,
+                    name: r.repoName
+                }))
+            );
+        } else {
+            res.status(404).json({ message: 'Register file not found.' });
+        }
+    } catch (error) {
+        console.error('Error fetching Repos:', error);
+        res.status(500).json({ message: 'An error occurred while fetching Repos.' });
+    }
+}
 export {
     analyzeController,
     getInsightsController,
@@ -293,5 +316,6 @@ export {
     getImpactAnalysisController,
     getDeadCodeController,
     getComplexityController,
-    getAIInsightsController
+    getAIInsightsController,
+    getReposController
 }

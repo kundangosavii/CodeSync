@@ -8,7 +8,8 @@ import {
     getImpactAnalysisController,
     getDeadCodeController,
     getComplexityController,
-    getAIInsightsController
+    getAIInsightsController,
+    getReposController
 } from './controller.js'
 
 const router = Router()
@@ -22,5 +23,6 @@ router.get('/impact-analysis', getImpactAnalysisController)
 router.get('/dead-code', getDeadCodeController)
 router.get('/complexity', getComplexityController)
 router.get('/ai-insights', getAIInsightsController)
+router.get('/repos', getReposController)
 
 export default router;
