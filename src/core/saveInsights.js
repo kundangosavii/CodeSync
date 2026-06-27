@@ -9,8 +9,17 @@ const newRepo = path.join(basePath, 'repos')
 function saveGraph(TARGET_DIR, graph) {
 
     try {
-        const repoPath = path.join(newRepo, path.basename(TARGET_DIR))
+        if (path.basename(TARGET_DIR).includes(".git")){
+            TARGET_DIR = TARGET_DIR.split('/').pop().replace('.git', '');
+        }
+        else{
+            TARGET_DIR = path.basename(TARGET_DIR);
+        }
+        const repoPath = path.join(newRepo, TARGET_DIR)
         const fullRepoPath = path.join(repoPath, 'graph.json')
+
+        console.log("repoPath:", repoPath);
+        console.log("fullRepoPath:", fullRepoPath);
 
         if (!fs.existsSync(repoPath)) {
             fs.mkdir(repoPath, { recursive: true }, (err) => {
@@ -43,7 +52,13 @@ function saveGraph(TARGET_DIR, graph) {
 
 function saveInsights(TARGET_DIR, insights) {
     try {
-        const repoPath = path.join(newRepo, path.basename(TARGET_DIR))
+        if (path.basename(TARGET_DIR).includes(".git")){
+            TARGET_DIR = TARGET_DIR.split('/').pop().replace('.git', '');
+        }
+        else{
+            TARGET_DIR = path.basename(TARGET_DIR);
+        }
+        const repoPath = path.join(newRepo, TARGET_DIR)
         const fullRepoPath = path.join(repoPath, 'insights.json')
         if (!fs.existsSync(repoPath)) {
             fs.mkdir(repoPath, { recursive: true }, (err) => {
@@ -76,7 +91,13 @@ function saveInsights(TARGET_DIR, insights) {
 
 function saveReadableInsights(TARGET_DIR, readableInsights) {
     try {
-        const repoPath = path.join(newRepo, path.basename(TARGET_DIR))
+        if (path.basename(TARGET_DIR).includes(".git")){
+            TARGET_DIR = TARGET_DIR.split('/').pop().replace('.git', '');
+        }
+        else{
+            TARGET_DIR = path.basename(TARGET_DIR);
+        }
+        const repoPath = path.join(newRepo, TARGET_DIR)
         const fullRepoPath = path.join(repoPath, 'readableInsights.txt')
         if (!fs.existsSync(repoPath)) {
             fs.mkdir(repoPath, { recursive: true }, (err) => {
@@ -106,8 +127,14 @@ function saveReadableInsights(TARGET_DIR, readableInsights) {
 }
 
 function saveGraphInNodeAndEdgesFormat(TARGET_DIR, graphNodesEdges) {
+    if (path.basename(TARGET_DIR).includes(".git")){
+            TARGET_DIR = TARGET_DIR.split('/').pop().replace('.git', '');
+        }
+    else{
+            TARGET_DIR = path.basename(TARGET_DIR);
+    }
     // Implementation for saving graph in node and edges format
-    const repoPath = path.join(newRepo, path.basename(TARGET_DIR))
+    const repoPath = path.join(newRepo, TARGET_DIR)
     const fullRepoPath = path.join(repoPath, 'graphNodesEdges.json')
 
     if (!fs.existsSync(repoPath)) {
@@ -136,7 +163,13 @@ function saveGraphInNodeAndEdgesFormat(TARGET_DIR, graphNodesEdges) {
 }
 
 function saveCycle(TARGET_DIR, cycle) {
-    const repoPath = path.join(newRepo, path.basename(TARGET_DIR))
+    if (path.basename(TARGET_DIR).includes(".git")){
+            TARGET_DIR = TARGET_DIR.split('/').pop().replace('.git', '');
+        }
+    else{
+            TARGET_DIR = path.basename(TARGET_DIR);
+    }
+    const repoPath = path.join(newRepo, TARGET_DIR)
     const fullRepoPath = path.join(repoPath, 'cycle.json')
 
     if (!fs.existsSync(repoPath)) {
@@ -165,7 +198,13 @@ function saveCycle(TARGET_DIR, cycle) {
 }
 
 function saveComplexity(TARGET_DIR, complexity) {
-    const repoPath = path.join(newRepo, path.basename(TARGET_DIR))
+    if (path.basename(TARGET_DIR).includes(".git")){
+            TARGET_DIR = TARGET_DIR.split('/').pop().replace('.git', '');
+    }
+    else{
+        TARGET_DIR = path.basename(TARGET_DIR);
+    }
+    const repoPath = path.join(newRepo, TARGET_DIR)
     const fullRepoPath = path.join(repoPath, 'complexity.json')
 
     if (!fs.existsSync(repoPath)) {
