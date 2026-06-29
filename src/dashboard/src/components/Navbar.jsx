@@ -20,10 +20,7 @@ export default function Navbar() {
                         {["Overview", "Commits", "PRs", "Actions"].map((tab, i) => (
                             <button
                                 key={i}
-                                className={`text-sm ${tab === "Overview"
-                                    ? "text-white border-b-2 border-blue-500 pb-1"
-                                    : "text-gray-400 hover:text-white"
-                                    }`}
+                                className="text-sm text-gray-400 hover:text-white border-b-2 border-transparent hover:border-blue-500 pb-1 transition"
                             >
                                 {tab}
                             </button>
