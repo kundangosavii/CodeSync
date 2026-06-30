@@ -8,13 +8,15 @@ import {
   Lock,
 } from "lucide-react";
 
+import { useState } from "react";
+
 export default function Sidebar() {
-  const repos = [
-    { name: "api-service", active: false },
-    { name: "auth-module", active: true },
+  const [repos, setRepos] = useState([
+    { name: "api-service", active: true },
+    { name: "auth-module", active: false },
     { name: "frontend-ui", active: false },
     { name: "data-pipeline", active: false },
-  ];
+  ])
 
   const menuItems = [
     { icon: Folder, label: "Repositories" },
@@ -25,26 +27,31 @@ export default function Sidebar() {
   ];
 
   return (
-    <div className="w-64 h-screen bg-[#080817] border-r border-gray-800 text-gray-300 flex flex-col justify-between p-4">
+    <div className="w-64 h-[90vh] bg-[#080817] border-r border-gray-800 text-gray-300 flex flex-col justify-between p-4">
 
       <div>
         <div className="mb-6">
           <p className="text-xs text-gray-500 mb-2">REPOSITORIES</p>
 
-          <div className="flex flex-col gap-2">
-            {repos.map((repo, i) => (
-              <div
-                key={i}
-                className={`flex items-center gap-2 px-3 py-2 rounded-md cursor-pointer ${
-                  repo.active
-                    ? "bg-gray-700 text-white"
-                    : "hover:bg-gray-800"
-                }`}
-              >
-                {repo.active && <Lock size={14} />}
-                <span className="text-sm">{repo.name}</span>
-              </div>
-            ))}
+            <div className="flex flex-col gap-2">
+              {repos.map((repo, i) => (
+                <div
+                  key={i}
+                  onClick={()=>{
+                    setRepos(repos.map((r, index) => {
+                      return index === i ? {...r, active: !r.active} : { ...r, active: false }
+                    }))
+                  }}
+                  className={`flex items-center gap-2 px-3 py-2 rounded-md cursor-pointer ${
+                    repo.active
+                      ? "bg-gray-700 text-white"
+                      : "hover:bg-gray-800"
+                  }`}
+                >
+                  {repo.active && <Lock size={14} />}
+                  <span className="text-sm">{repo.name}</span>
+                </div>
+              ))}
           </div>
         </div>
 
