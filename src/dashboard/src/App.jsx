@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 
-import { analyzeRepo, getInsights, getGraph, getImpact, getDeadCode, getComplexity, getAIInsights, getRepos } from './api.js'
+import { analyzeRepo, getInsights, getGraph, getImpact, getDeadCode, getComplexity, getAIInsights, getRepos, getAnalysisTiming } from './api.js'
 import Graph from "./components/Graph.jsx";
 import Insights from "./components/Markdown.jsx"
 import Navbar from './components/Navbar.jsx';
@@ -14,6 +14,7 @@ export default function App() {
   const [insights, setInsights] = useState([]);
   const [graphData, setGraphData] = useState(null)
   const [cleanedInsights, setCleanedInsights] = useState(null)
+  const [timing, setTiming] = useState(null)
 
   const [impact, setImpact] = useState([]);
   const [deadCode, setDeadCode] = useState([])
@@ -47,6 +48,8 @@ export default function App() {
   );
     setSelectedRepo(repo);
     console.log(repo.repoId)
+    const time = await getAnalysisTiming(repo.repoId)
+    setTiming(time)
     const insights = await getInsights(repo.repoId)
     setInsights(insights)
     console.log("Insights:", insights)
@@ -89,6 +92,7 @@ export default function App() {
       console.log(err)
     }
   }
+
 
   // return (
 
@@ -243,7 +247,7 @@ export default function App() {
     <div className="h-screen bg-[#0a0a1a]">
       {/* Navbar */}
       <div className="">
-        <Navbar />
+        <Navbar repo={selectedRepo} analysisTime={timing}/>
       </div>
 
       <div className=''>
