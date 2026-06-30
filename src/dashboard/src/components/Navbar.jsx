@@ -1,7 +1,10 @@
+import React from "react";
 import { Bell } from "lucide-react"
+import TimeAgo  from "./timeAgo.jsx"
 
 
-export default function Navbar({repo}) {
+export default function Navbar({repo, analysisTime}) {
+
     return (
         <>
             <div className="w-full bg-[#080817] border-b border-gray-800 px-6 py-3 flex items-center justify-between">
@@ -20,8 +23,8 @@ export default function Navbar({repo}) {
                         <div className="flex items-center gap-1">
                             <p className="bg-green-500 h-2 w-2 border rounded-full"></p>
                             <p className="text-gray-400 text-sm">
-                            Analyzed 2m ago
-                            </p>    
+                            <TimeAgo timestamp={analysisTime} />
+                            </p>   
                         </div>
                     </div>
 
