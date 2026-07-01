@@ -6,6 +6,7 @@ import Graph from "./components/Graph.jsx";
 import Insights from "./components/Markdown.jsx"
 import Navbar from './components/Navbar.jsx';
 import Sidebar from './components/Sidebar.jsx'
+import Analysisbar from './components/Analysisbar.jsx'
 
 export default function App() {
   const [repoInput, setRepoInput] = useState("");
@@ -244,14 +245,22 @@ export default function App() {
 
 
   return (
-    <div className="h-screen bg-[#0a0a1a]">
+    <div className="h-screen bg-[#0a0a1a] overflow-hidden">
       {/* Navbar */}
       <div className="">
         <Navbar repo={selectedRepo} analysisTime={timing}/>
       </div>
 
-      <div className=''>
-        <Sidebar repos={repos} onRepoClick={handleSelectRepo} />
+      <div className='h-screen flex flex-row'>
+        <div>
+          <Sidebar repos={repos} onRepoClick={handleSelectRepo} />
+        </div>
+
+          <Graph graphData={graphData} onNodeClick={handleNodeClick} />
+
+        <div>
+          <Analysisbar repos={repos} onRepoClick={handleSelectRepo} />
+        </div>
       </div>
     </div>
   )
