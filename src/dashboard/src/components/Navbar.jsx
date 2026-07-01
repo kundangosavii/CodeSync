@@ -23,7 +23,10 @@ export default function Navbar({repo, analysisTime}) {
                         <div className="flex items-center gap-1">
                             <p className="bg-green-500 h-2 w-2 border rounded-full"></p>
                             <p className="text-gray-400 text-sm">
-                            <TimeAgo timestamp={analysisTime} />
+                                {repo 
+                                ? <TimeAgo timestamp={analysisTime} />
+                                : "Select repository"  
+                                }
                             </p>   
                         </div>
                     </div>
