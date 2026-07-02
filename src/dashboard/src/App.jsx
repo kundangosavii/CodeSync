@@ -35,7 +35,6 @@ export default function App() {
   }, []);
 
   const handleAnalyze = () => {
-    console.log(repoInput)
     analyzeRepo(repoInput)
   };
 
@@ -59,31 +58,33 @@ export default function App() {
     setGraphData(graphData)
     console.log("Insights:", graphData)
 
+    const deadCode = await getDeadCode(repo.repoId)
+    setDeadCode(deadCode)
+
   };
 
   const handleNodeClick = async (filePath) => {
     try {
       const repo = selectedRepo
       const impact = await getImpact(repo.repoId, filePath);
-      console.log(impact)
       setImpact(impact);
       const complexity = await getComplexity(repo.repoId, filePath)
       setComplexity(complexity)
-      console.log(complexity)
+
     } catch (err) {
       console.error(err);
     }
   };
 
-  const handleDeadCode = async () => {
-    try {
-      const repo = selectedRepo
-      const deadCode = await getDeadCode(repo.repoId)
-      setDeadCode(deadCode)
-    } catch (err) {
-      console.log(err)
-    }
-  }
+  // const handleDeadCode = async () => {
+  //   try {
+  //     const repo = selectedRepo
+  //     const deadCode = await getDeadCode(repo.repoId)
+  //     setDeadCode(deadCode)
+  //   } catch (err) {
+  //     console.log(err)
+  //   }
+  // }
 
   const handleAiInsights = async () => {
     try {
@@ -95,6 +96,7 @@ export default function App() {
     }
   }
 
+  console.log(deadCode)
 
   // return (
 
