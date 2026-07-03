@@ -8,7 +8,7 @@ export async function hfService(prompt) {
         const client = new InferenceClient(process.env.HF_TOKEN);
 
         const chatCompletion = await client.chatCompletion({
-            model: "deepseek-ai/DeepSeek-V4-Pro:novita",
+            model: "openai/gpt-oss-20b:groq",
             messages: [
                 {
                     role: "user",
