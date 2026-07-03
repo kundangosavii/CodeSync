@@ -21,6 +21,9 @@ export default function App() {
   const [deadCode, setDeadCode] = useState([])
   const [complexity, setComplexity] = useState(null)
 
+  const [aiInsights, setAiInsights] = useState(null)
+  const [aiInsightLoading, setAiInsightLoading] = useState(false)
+
   useEffect(() => {
     const loadRepos = async () => {
       try {
@@ -79,14 +82,16 @@ export default function App() {
   const handleAiInsights = async () => {
     try {
       const repo = selectedRepo
+      setAiInsightLoading(true)
       const aiinsights = await getAIInsights(repo.repoId)
-      setCleanedInsights(aiinsights.insights)
+      setAiInsights(aiinsights.insights)
     } catch (err) {
       console.log(err)
+    } finally {
+      setAiInsightLoading(false)
     }
   }
 
-  console.log(deadCode)
 
   // return (
 
@@ -251,7 +256,8 @@ export default function App() {
           <Graph graphData={graphData} onNodeClick={handleNodeClick} />
 
         <div>
-          <Analysisbar insights={insights} impact={impact} deadCode={deadCode} complexity={complexity}/>
+          <Analysisbar insights={insights} impact={impact} deadCode={deadCode} complexity={complexity} aiInsights = {aiInsights} aiInsightLoading={aiInsightLoading} onGetAiInsights={handleAiInsights}
+          />
         </div>
       </div>
     </div>
