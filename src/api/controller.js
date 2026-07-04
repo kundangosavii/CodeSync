@@ -330,6 +330,8 @@ const getAIInsightsController = async (req, res) => {
 
         console.log(typeof data)
 
+        fs.writeFileSync(`C:/code-analyser/repos/${repoName}/aiInsights.json`, JSON.stringify(data, null, 2), 'utf8');
+
 
         res.status(200).json({
             success: true,
