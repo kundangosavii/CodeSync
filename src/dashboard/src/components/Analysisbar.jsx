@@ -14,7 +14,12 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 
+import { AnalysisCard } from "./AnalysisCard";
+
 export default function Analysisbar({ insights, impact, deadCode, complexity, aiInsights, aiInsightLoading, onGetAiInsights }) {
+
+    const [showAnalysisCard, setShowAnalysisCard] = useState(false);
+
     return (
         <div className="w-96 h-[90vh] bg-[#080817] border-r border-gray-800 text-gray-300 flex flex-col p-4 overflow-hidden">
 
@@ -160,9 +165,31 @@ export default function Analysisbar({ insights, impact, deadCode, complexity, ai
                         {aiInsightLoading ? (
                             <p className="text-sm text-gray-400">Generating AI insight...</p>
                         ) : aiInsights ? (
-                            <button className="w-full text-left rounded-xl border border-[#ffabfb33] bg-[#ffabf00f] p-3 text-sm text-[#ffabe4] hover:bg-[#ffabf018] transition">
-                                Your insights are ready, click to review
-                            </button>
+                            <>
+                                <button
+                                    onClick={() => setShowAnalysisCard((prev) => !prev)}
+                                    className="w-full text-left rounded-xl border border-[#ffabfb33] bg-[#ffabf00f] p-3 text-sm text-[#ffabe4] hover:bg-[#ffabf018] transition"
+                                >
+                                    Your insights are ready, click to review
+                                </button>
+
+                                 {showAnalysisCard && (
+                            <div className="fixed inset-0 z-50 bg-black/70">
+                                <div className="flex h-full w-full items-center justify-center p-4">
+                                    <div className="relative h-[90vh] w-[90vw] max-w-6xl rounded-2xl border border-[#ffabfb33] bg-[#080817]/90 p-6 shadow-2xl backdrop-blur-md overflow-auto no-scrollbar">
+                                        <button
+                                            onClick={() => setShowAnalysisCard(false)}
+                                            className="absolute right-4 top-4 rounded-md border border-gray-700 px-3 py-1 text-sm text-gray-300 hover:bg-white/10"
+                                        >
+                                            Close
+                                        </button>
+
+                                        <AnalysisCard aiInsights={aiInsights} />
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                            </>
                         ) : (
                             <p className="text-sm text-gray-500 italic">Click the button to generate AI insights.</p>
                         )}
