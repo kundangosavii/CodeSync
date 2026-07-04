@@ -9,16 +9,24 @@ const newRepo = path.join(__dirname, 'repos')
 
 function impactAnalysis(TARGET_DIR) {
 
-    const repoPath = path.join(newRepo, path.basename(TARGET_DIR))
+    if (path.basename(TARGET_DIR).includes(".git")){
+            TARGET_DIR = TARGET_DIR.split('/').pop().replace('.git', '');
+    }
+    else{
+            TARGET_DIR = path.basename(TARGET_DIR);
+    }
+
+    const repoPath = path.join(newRepo, TARGET_DIR)
     const fullRepoPath = path.join(repoPath, 'graph.json')
+
+
+    let impactData = [];
 
     fs.readFile(fullRepoPath, 'utf8', (err, data) => {
         if (err) {
             console.error(`Error reading file ${fullRepoPath}:`, err);
             return;
         }
-
-        let impactData = [];
 
         try {
             const graphJson = JSON.parse(data);
@@ -42,21 +50,19 @@ function impactAnalysis(TARGET_DIR) {
 
                 impactData.push(Data);
             }
+
             fs.writeFile(path.join(repoPath, 'impactAnalysis.json'), JSON.stringify(impactData, null, 2), (writeErr) => {
-                    if (writeErr) {
-                        console.error(`Error writing impact analysis to file:`, writeErr);
-                    } else {
-                        console.log(`Impact analysis saved to ${path.join(repoPath, 'impactAnalysis.json')}`);
-                    }
-                });
+                if (writeErr) {
+                    console.error(`Error writing impact analysis to file:`, writeErr);
+                } else {
+                    console.log(`Impact analysis saved to ${path.join(repoPath, 'impactAnalysis.json')}`);
+                }
+            });
         }
         catch (parseErr) {
             console.error(`Error parsing JSON from file ${fullRepoPath}:`, parseErr);
         }
-    }
-    )
-
-
+    })
 }
 
 export { impactAnalysis }
