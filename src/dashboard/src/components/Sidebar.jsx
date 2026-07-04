@@ -9,8 +9,11 @@ import {
 } from "lucide-react";
 
 import { useState } from "react";
+import { InputCard } from "./InputCard";
 
 export default function Sidebar({ repos, onRepoClick }) {
+
+  const [showInputCard, setShowInputCard] = useState(false)
 
   const menuItems = [
     { icon: Folder, label: "Repositories" },
@@ -33,8 +36,8 @@ export default function Sidebar({ repos, onRepoClick }) {
                 key={repo.repoId}
                 onClick={() => onRepoClick(repo)}
                 className={`flex items-center gap-2 px-3 py-2 rounded-md cursor-pointer transition-colors ${repo.active
-                    ? "bg-gray-700 text-white"
-                    : "hover:bg-gray-800 text-gray-300"
+                  ? "bg-gray-700 text-white"
+                  : "hover:bg-gray-800 text-gray-300"
                   }`}
               >
                 {repo.active && <Lock size={14} />}
@@ -60,10 +63,29 @@ export default function Sidebar({ repos, onRepoClick }) {
         </div>
       </div>
 
-      <button className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md">
+      <button
+        onClick={() => setShowInputCard((prev) => !prev)}
+        className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md">
         <Plus size={16} />
         Analyze New Repo
       </button>
+
+      {showInputCard && (
+        <div className="fixed inset-0 z-50 bg-black/70">
+          <div className="flex h-full w-full items-center justify-center p-4">
+            <div className="relative h-[90vh] w-[50vw] max-w-6xl rounded-2xl border border-[#abaeff33] bg-[#080817]/90 p-6 shadow-2xl backdrop-blur-md overflow-auto no-scrollbar">
+              <button
+                onClick={() => setShowInputCard(false)}
+                className="absolute right-4 top-4 mt-3 mr-4 rounded-md border border-gray-700 px-3 py-1 text-sm text-gray-300 hover:bg-white/10"
+              >
+                Close
+              </button>
+
+              <InputCard />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
