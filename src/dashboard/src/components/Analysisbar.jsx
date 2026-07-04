@@ -23,7 +23,13 @@ export default function Analysisbar({ insights, impact, deadCode, complexity, ai
     return (
         <div className="w-96 h-[90vh] bg-[#080817] border-r border-gray-800 text-gray-300 flex flex-col p-4 overflow-hidden">
 
-            <p className="text-xs text-gray-500 mb-4 shrink-0">REPOSITORY INSIGHTS</p>
+            <div className="shrink-0 flex items-center justify-between mb-4">
+                <p className="text-x text-gray-300 font-bold font-sans">REPOSITORY INSIGHTS</p>
+
+                <button className="inline-flex items-center justify-center rounded-md border border-[#baabff33] bg-[#b5abff0f] px-4 py-2 text-xs font-semibold tracking-wider uppercase text-[#b1abff] transition hover:bg-[#ffabf018] hover:border-[#ffabfb55]">
+                    Export analysis
+                </button>
+            </div>
 
             <div className="flex-1 overflow-y-auto pr-2 no-scrollbar">
 
@@ -38,17 +44,17 @@ export default function Analysisbar({ insights, impact, deadCode, complexity, ai
                     </div>
 
                     <div className="mt-4 flex flex-col gap-3">
-                        { insights && insights.length != 0 ? (
+                        {insights && insights.length != 0 ? (
                             insights.slice(0, 2).map((insight, i) => (
-                            <p key={i} className="text-sm leading-relaxed text-gray-300 wrap-break-word">
-                                {insight}
-                            </p>
+                                <p key={i} className="text-sm leading-relaxed text-gray-300 wrap-break-word">
+                                    {insight}
+                                </p>
                             ))
 
                         ) : (
                             <p className="text-sm italic text-gray-500">Please select the repository to get insights</p>
 
-                        ) }
+                        )}
                     </div>
                 </div>
 
@@ -171,7 +177,7 @@ export default function Analysisbar({ insights, impact, deadCode, complexity, ai
                             {
                                 aiInsightLoading ? (
                                     <>
-                                        <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-[#ffabe4] border-t-transparent">
+                                        <span className="h-3.5 w-3.5 border-2">
                                             Loading
                                         </span>
                                     </>
@@ -218,6 +224,7 @@ export default function Analysisbar({ insights, impact, deadCode, complexity, ai
                 </div>
 
             </div>
+
         </div>
     );
 }
