@@ -16,7 +16,7 @@ import { detectCycles, calculateDepth, calculateComplexity } from "./src/core/df
 
 
 async function run(repoUrl) {
-  const TARGET_DIR = process.argv[2] || repoUrl;
+  const TARGET_DIR = repoUrl;
   const resolved = path.resolve(TARGET_DIR);
 
   let repoPath;
@@ -30,7 +30,6 @@ async function run(repoUrl) {
 
   const files = getAllFiles(repoPath)
 
-  console.log(`Found ${files.length} files\n`);
 
   const results = [];
 
@@ -39,25 +38,12 @@ async function run(repoUrl) {
     results.push(parsed);
   });
 
-  console.log("Sample Output:\n");
-  console.log(JSON.stringify(results.slice(0, 3), null, 2));
 
   const graph = graphBuilder(results);
 
-  console.log("\nGraph Output:\n");
-  console.log(JSON.stringify(Object.entries(graph).slice(0, 3), null, 2));
-
   const insights = generateInsight(graph);
 
-  console.log("\nInsights:\n");
-  console.log(JSON.stringify(insights, null, 2));
-
   const ReadableInsights = generateReadableInsights(insights);
-
-  console.log("\nReadable Insights:\n");
-  ReadableInsights.forEach((msg, i) => {
-    console.log(`${i + 1}. ${msg}`);
-  });
 
   const graphNodesEdges = transformGraph(graph)
 
@@ -65,14 +51,14 @@ async function run(repoUrl) {
   const depth = calculateDepth(graph)
   const complexity = calculateComplexity(graph, depth, cycle)
 
-  saveGraph(TARGET_DIR, graph);
-  saveInsights(TARGET_DIR, insights);
-  saveReadableInsights(TARGET_DIR, ReadableInsights);
-  saveGraphInNodeAndEdgesFormat(TARGET_DIR, graphNodesEdges);
-  saveCycle(TARGET_DIR, cycle);
-  saveComplexity(TARGET_DIR, complexity);
+  // saveGraph(TARGET_DIR, graph);
+  // saveInsights(TARGET_DIR, insights);
+  // saveReadableInsights(TARGET_DIR, ReadableInsights);
+  // saveGraphInNodeAndEdgesFormat(TARGET_DIR, graphNodesEdges);
+  // saveCycle(TARGET_DIR, cycle);
+  // saveComplexity(TARGET_DIR, complexity);
 
-  impactAnalysis(TARGET_DIR);
+  // impactAnalysis(TARGET_DIR);
 
   const date = new Date();
   const dateString = date.toLocaleString();
@@ -83,10 +69,17 @@ async function run(repoUrl) {
     return TARGET_DIR.split(path.sep).pop() + "_" + formattedDate.replace(/[:\s]/g, "").replace('pm', "");
   }
 
-  console.log("\nUnique ID for this run:", generateUniqeId());
-  console.log(formattedDate)
 
+
+  return {
+    files,
+    graph,
+    insights,
+    ReadableInsights,
+    cycle,
+    complexity,
+    graphNodesEdges
+  };
 }
 
-// run();
 export { run }
