@@ -18,9 +18,6 @@ function saveGraph(TARGET_DIR, graph) {
         const repoPath = path.join(newRepo, TARGET_DIR)
         const fullRepoPath = path.join(repoPath, 'graph.json')
 
-        console.log("repoPath:", repoPath);
-        console.log("fullRepoPath:", fullRepoPath);
-
         if (!fs.existsSync(repoPath)) {
             fs.mkdir(repoPath, { recursive: true }, (err) => {
                 if (err) {
