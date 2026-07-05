@@ -13,10 +13,8 @@ function graphBuilder(parsedFile) {
 
     parsedFile.forEach((fileData) => {
         const fromFile = fileData.file;
-        console.log(fileData)
 
         fileData.imports.forEach((imp) => {
-            console.log(imp)
             const resolvedPath = resolveImportPath(fromFile, imp);
 
             if (graph[resolvedPath]) {
