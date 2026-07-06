@@ -4,6 +4,7 @@ import path from 'path';
 import { run } from '../index.js';
 import { section } from './helper.js';
 import ora from 'ora';
+import Table from "cli-table3"
 
 
 const program = new Command();
@@ -51,7 +52,21 @@ program
 
         console.log(`\nHigh Complexity Files: ${highRiskFiles.length}`);
 
-        
+        section("Cycles Detected")
+        console.log(`Total Cycles Detected: ${result.cycle.length}`);
+        console.log(`Cycles: ${result.cycle.map(c => c.map(f => path.basename(f)).join(' -> ')).join('\n')}`);
+
+        section("Depth Analysis");
+
+        const table = new Table({
+            head: ["File", "Score", "Depth", "In Cycle", "Imports", "Imported By"],
+        });
+
+        Object.entries(result.complexity).forEach(([fileName, data]) => {
+            table.push([fileName, data.complexityScore, data.depth, data.inCycle ? "Yes" : "No", data.imports, data.importedBy]);
+        });
+
+        console.log(table.toString());
 
     });
 

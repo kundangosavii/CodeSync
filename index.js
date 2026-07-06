@@ -79,6 +79,7 @@ async function run(repoUrl) {
     insights,
     ReadableInsights,
     cycle,
+    depth,
     complexity,
     graphNodesEdges
   };
