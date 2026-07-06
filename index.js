@@ -12,6 +12,7 @@ import { saveGraph, saveInsights, saveReadableInsights, saveGraphInNodeAndEdgesF
 import { transformGraph } from "./src/core/graphTransformation.js";
 import { impactAnalysis } from "./src/core/impactAnalysis.js";
 import { detectCycles, calculateDepth, calculateComplexity } from "./src/core/dfsAnalysis.js";
+import ora from "ora";
 
 
 
@@ -27,6 +28,7 @@ async function run(repoUrl) {
   else{
     repoPath = resolved;
   }
+
 
   const files = getAllFiles(repoPath)
 
