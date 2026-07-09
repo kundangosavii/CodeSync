@@ -1,6 +1,9 @@
 import { Command } from 'commander';
 import chalk from 'chalk';
 import path from 'path';
+import { spawn } from "child_process";
+import waitOn from "wait-on";
+import open from "open";
 import { run } from '../index.js';
 import { section } from './helper.js';
 import ora from 'ora';
@@ -70,4 +73,49 @@ program
 
     });
 
-program.parse();
+program
+    .command('dashboard')
+    .action(async () => {
+        const backendPath = "C:\\code-analyser";
+        const frontendPath = "C:\\code-analyser\\src\\dashboard";
+
+        console.log(chalk.blue("Starting the dashboard..."));
+
+        const startProcess = (command, args, cwd, label) => {
+            const child = spawn(command, args, {
+                cwd,
+                stdio: "inherit",
+                shell: true
+            });
+
+            child.on("error", (err) => {
+                console.error(`${label} failed to start:`, err.message);
+            });
+
+            return child;
+        };
+
+        const backend = startProcess("npm", ["run", "dev"], backendPath, "Backend");
+        const frontend = startProcess("npm", ["run", "dev"], frontendPath, "Frontend");
+
+        try {
+            console.log(chalk.blue("Waiting for the dashboard to be ready..."));
+            await waitOn({ resources: ["http://localhost:5173"], timeout: 30000 });
+
+            console.log(chalk.green("Dashboard is ready! Opening in browser..."));
+            await open("http://localhost:5173");
+        } catch (err) {
+            console.error(chalk.red("Error while starting the dashboard:"), err);
+        }
+
+        const cleanup = () => {
+            backend.kill();
+            frontend.kill();
+            process.exit();
+        };
+
+        process.on("SIGINT", cleanup);
+        process.on("SIGTERM", cleanup);
+    });
+
+program.parse(process.argv);
