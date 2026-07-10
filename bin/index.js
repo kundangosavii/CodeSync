@@ -7,12 +7,15 @@ import open from "open";
 import ora from 'ora';
 import Table from "cli-table3"
 
+
 import { run } from '../index.js';
 import { section } from './helper.js';
 import { loadFiles } from './loadFiles.js';
+import { displayLogo } from './logo.js';
 
 
 const program = new Command();
+
 
 program
     .name('code-analyser')
@@ -21,6 +24,9 @@ program
 
 program
     .command('analyze')
+    .hook('preAction', () => {
+        displayLogo();
+    })
     .argument('<repoPath>', 'Path to the repository or GitHub repository URL')
     .description('Analyze the codebase and provide insights of the codebase')
     .option('--json', 'Output results in JSON format')
@@ -92,6 +98,9 @@ Examples:
 
 program
     .command('detail-analysis')
+    .hook('preAction', () => {  
+        displayLogo();
+    })
     .argument('<repoPath>')
     .description('Provide a detailed analysis of the codebase including complexity, cycles, and dead code')
     .option('--json', 'Output results in JSON format')
@@ -242,6 +251,11 @@ Examples:
     .action((path, options) => {
         const result = loadFiles(path);
 
+        if(!result){
+            console.error(chalk.red("Error: Could not load files. Please analyze the repository first using the 'analyze' command."));
+            return
+        }
+
         section("Complexity Analysis");
 
         const complexity = Object.entries(result.complexity).map(([file, data]) => ({
@@ -270,6 +284,11 @@ Examples:
     )
     .action((repoPath, options) => {
         const result = loadFiles(repoPath);
+
+        if(!result) {
+            console.error(chalk.red("Error: Could not load files. Please analyze the repository first using the 'analyze' command."));
+            return
+        }
 
         section("Cycle Detection");
 
@@ -303,6 +322,11 @@ Examples:
     .option('--json', 'Output results in JSON format')
     .action((path, options) => {
         const result = loadFiles(path);
+
+        if(!result){
+            console.error(chalk.red("Error: Could not load files. Please analyze the repository first using the 'analyze' command."));
+            return
+        }
 
         section("Depth Analysis");
 
