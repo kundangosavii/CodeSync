@@ -7,11 +7,11 @@ export default function Navbar({repo, analysisTime}) {
 
     return (
         <>
-            <div className="w-full bg-[#080817] border-b border-gray-800 px-6 py-3 flex items-center justify-between">
+            <div className="w-full bg-black border-b border-gray-800 px-6 py-3 flex items-center justify-between">
 
                 <div className="flex item-center gap-6 items-center">
                     <div>
-                        <h1 className="text-blue-400 font-semibold text-lg">
+                        <h1 className="text-orange-600 font-bold text-lg">
                             CodeSync AI
                         </h1>
                         <p className="text-xs text-gray-500">Visualize and Analyze</p>
@@ -37,7 +37,7 @@ export default function Navbar({repo, analysisTime}) {
                         {["Overview", "Commits", "PRs", "Actions"].map((tab, i) => (
                             <button
                                 key={i}
-                                className="text-sm text-gray-400 hover:text-white border-b-2 border-transparent hover:border-blue-500 pb-1 transition"
+                                className="text-sm text-gray-400 hover:text-white border-b-2 border-transparent hover:border-orange-500 pb-1 transition"
                             >
                                 {tab}
                             </button>
@@ -50,7 +50,7 @@ export default function Navbar({repo, analysisTime}) {
                         Refresh
                     </button>
 
-                    <button className="px-3 py-1 bg-blue-600 rounded-md text-white hover:bg-blue-700">
+                    <button className="px-3 py-1 bg-orange-500 rounded-md text-white hover:bg-blue-700">
                         Sync Repo
                     </button>
 
