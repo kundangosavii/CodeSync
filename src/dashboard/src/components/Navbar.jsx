@@ -7,7 +7,7 @@ export default function Navbar({repo, analysisTime}) {
 
     return (
         <>
-            <div className="w-full bg-black border-b border-gray-800 px-6 py-3 flex items-center justify-between">
+            <div className="w-full bg-black border-b border-[#2e2e2e] px-6 py-3 flex items-center justify-between">
 
                 <div className="flex item-center gap-6 items-center">
                     <div>

@@ -21,7 +21,7 @@ export default function Analysisbar({ insights, impact, deadCode, complexity, ai
     const [showAnalysisCard, setShowAnalysisCard] = useState(false);
 
     return (
-        <div className="w-96 h-[91vh] bg-black border-l border-gray-900 text-gray-300 flex flex-col p-4 overflow-hidden">
+        <div className="w-96 h-[91vh] bg-black border-l border-[#2e2e2e] text-gray-300 flex flex-col p-4 overflow-hidden">
 
             <div className="shrink-0 flex items-center justify-between mb-4">
                 <p className="text-x text-gray-300 font-bold font-sans">REPOSITORY INSIGHTS</p>
