@@ -24,7 +24,7 @@ export default function Sidebar({ repos, onRepoClick }) {
   ];
 
   return (
-    <div className="w-64 h-[91vh] bg-black border-r border-gray-900 text-gray-300 flex flex-col justify-between p-4">
+    <div className="w-64 h-[91vh] bg-black border-r border-[#2e2e2e] text-gray-300 flex flex-col justify-between p-4">
 
       <div>
         <div className="mb-6">
@@ -73,7 +73,7 @@ export default function Sidebar({ repos, onRepoClick }) {
       {showInputCard && (
         <div className="fixed inset-0 z-50 bg-black/70">
           <div className="flex h-full w-full items-center justify-center p-4">
-            <div className="relative h-[90vh] w-[50vw] max-w-6xl rounded-2xl border border-[#abaeff33] bg-[#080817]/90 p-6 shadow-2xl backdrop-blur-md overflow-auto no-scrollbar">
+            <div className="relative h-[90vh] w-[50vw] max-w-6xl rounded-2xl border border-[#abaeff33] bg-[#04040ad4] p-6 shadow-2xl backdrop-blur-md overflow-auto no-scrollbar">
               <button
                 onClick={() => setShowInputCard(false)}
                 className="absolute right-4 top-4 mt-3 mr-4 rounded-md border border-gray-700 px-3 py-1 text-sm text-gray-300 hover:bg-white/10"
@@ -82,6 +82,7 @@ export default function Sidebar({ repos, onRepoClick }) {
               </button>
 
               <InputCard />
+
             </div>
           </div>
         </div>
