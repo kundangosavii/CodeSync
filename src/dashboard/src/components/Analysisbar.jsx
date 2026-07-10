@@ -21,12 +21,12 @@ export default function Analysisbar({ insights, impact, deadCode, complexity, ai
     const [showAnalysisCard, setShowAnalysisCard] = useState(false);
 
     return (
-        <div className="w-96 h-[90vh] bg-[#080817] border-r border-gray-800 text-gray-300 flex flex-col p-4 overflow-hidden">
+        <div className="w-96 h-[91vh] bg-black border-l border-gray-900 text-gray-300 flex flex-col p-4 overflow-hidden">
 
             <div className="shrink-0 flex items-center justify-between mb-4">
                 <p className="text-x text-gray-300 font-bold font-sans">REPOSITORY INSIGHTS</p>
 
-                <button className="inline-flex items-center justify-center rounded-md border border-[#baabff33] bg-[#b5abff0f] px-4 py-2 text-xs font-semibold tracking-wider uppercase text-[#b1abff] transition hover:bg-[#ffabf018] hover:border-[#ffabfb55]">
+                <button className="inline-flex items-center justify-center rounded-md border border-[#f17f0e33] bg-[#ed451b22] px-4 py-2 text-xs font-semibold tracking-wider uppercase text-[#f67119] transition hover:bg-[#ffabf018] hover:border-[#ffabfb55]">
                     Export analysis
                 </button>
             </div>

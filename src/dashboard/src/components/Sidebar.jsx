@@ -24,7 +24,7 @@ export default function Sidebar({ repos, onRepoClick }) {
   ];
 
   return (
-    <div className="w-64 h-[90vh] bg-black border-r border-gray-800 text-gray-300 flex flex-col justify-between p-4">
+    <div className="w-64 h-[91vh] bg-black border-r border-gray-900 text-gray-300 flex flex-col justify-between p-4">
 
       <div>
         <div className="mb-6">

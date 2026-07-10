@@ -69,5 +69,5 @@ export default function Graph({ graphData, onNodeClick }) {
     return () => cy.destroy(); // cleanup
   }, [graphData]);
 
-  return <div ref={cyRef} className="w-full border border-gray-800 bg-[#171731]" />;
+  return <div ref={cyRef} className="w-full bg-black" />;
 }
