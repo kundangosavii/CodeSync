@@ -17,7 +17,8 @@ const program = new Command();
 program
     .command('analyze')
     .argument('<repoPath>', 'Path to the repository or GitHub repository URL')
-    .action(async (repoPath) => {
+    .option('--json', 'Output results in JSON format')
+    .action(async (repoPath, options) => {
         const delay = (ms) => new Promise(res => setTimeout(res, ms));
         const spinner = ora('Analyzing repository...').start();
 
@@ -42,27 +43,43 @@ program
         spinner.succeed(chalk.green("Analysis Complete"));
         console.log(chalk.bold.blue(`Found ${result.files.length} files for analysis.\n`));
 
-        section("Codebase Summary");
+        if (options.json) {
+            console.log(`Total Files: ${JSON.stringify(result.graphNodesEdges.nodes.length, null, 2)}`);
+            console.log(`Entry Points: ${JSON.stringify(result.insights.EntryPoints.map(ep => path.basename(ep.file)), null, 2)}`);
+            console.log(`Cycles Found: ${JSON.stringify(result.cycle.length, null, 2)}`);
+            console.log(`Dead Code Files: ${JSON.stringify(result.insights.UnusedFiles.length, null, 2)}`);
 
-        console.log(`Total Files: ${result.graphNodesEdges.nodes.length}`);
-        console.log(`Entry Points: ${result.insights.EntryPoints.map(ep => path.basename(ep.file)).join(', ')}`);
-        console.log(`Cycles Found: ${result.cycle.length}`);
-        console.log(`Dead Code Files: ${result.insights.UnusedFiles.length}`);
+            const highRiskFiles = Object.entries(result.complexity).filter(([, data]) => data.inCycle == true);
+            highRiskFiles.forEach(([file, data]) => {
+                console.log(`\nFile: ${path.basename(file)}, \n Depth: ${data.depth},\n In Cycle: ${data.inCycle}`);
+            });
 
-        section("High Risk Files");
-        const highRiskFiles = Object.entries(result.complexity).filter(([, data]) => data.inCycle == true);
-        highRiskFiles.forEach(([file, data]) => {
-            console.log(`\nFile: ${path.basename(file)}, \n Depth: ${data.depth},\n In Cycle: ${data.inCycle}`);
-        });
+            console.log(`\nHigh Complexity Files: ${highRiskFiles.length}`);
 
-        console.log(`\nHigh Complexity Files: ${highRiskFiles.length}`);
+        } else {
+            section("Codebase Summary");
 
+            console.log(`Total Files: ${result.graphNodesEdges.nodes.length}`);
+            console.log(`Entry Points: ${result.insights.EntryPoints.map(ep => path.basename(ep.file)).join(', ')}`);
+            console.log(`Cycles Found: ${result.cycle.length}`);
+            console.log(`Dead Code Files: ${result.insights.UnusedFiles.length}`);
+
+            section("High Risk Files");
+            const highRiskFiles = Object.entries(result.complexity).filter(([, data]) => data.inCycle == true);
+            highRiskFiles.forEach(([file, data]) => {
+                console.log(`\nFile: ${path.basename(file)}, \n Depth: ${data.depth},\n In Cycle: ${data.inCycle}`);
+            });
+
+            console.log(`\nHigh Complexity Files: ${highRiskFiles.length}`);
+
+        }
     });
 
 program
     .command('detail-analysis')
     .argument('<repoPath>')
-    .action(async (repoPath) => {
+    .option('--json', 'Output results in JSON format')
+    .action(async (repoPath, options) => {
         const delay = (ms) => new Promise(res => setTimeout(res, ms));
         const spinner = ora('Analyzing repository...').start();
 
@@ -87,39 +104,45 @@ program
         spinner.succeed(chalk.green("Analysis Complete"));
         console.log(chalk.bold.blue(`Found ${result.files.length} files for analysis.\n`));
 
-        section("Codebase Summary");
+        if (options.json) {
+            console.log(JSON.stringify(result, null, 2));
 
-        console.log(`Total Files: ${result.graphNodesEdges.nodes.length}`);
-        console.log(`Entry Points: ${result.insights.EntryPoints.map(ep => path.basename(ep.file)).join(', ')}`);
-        console.log(`Cycles Found: ${result.cycle.length}`);
-        console.log(`Dead Code Files: ${result.insights.UnusedFiles.length}`);
+        } else {
+            section("Codebase Summary");
 
-        section("High Risk Files");
-        const highRiskFiles = Object.entries(result.complexity).filter(([, data]) => data.inCycle == true);
-        highRiskFiles.forEach(([file, data]) => {
-            console.log(`\nFile: ${path.basename(file)}, \n Depth: ${data.depth},\n In Cycle: ${data.inCycle}`);
-        });
+            console.log(`Total Files: ${result.graphNodesEdges.nodes.length}`);
+            console.log(`Entry Points: ${result.insights.EntryPoints.map(ep => path.basename(ep.file)).join(', ')}`);
+            console.log(`Cycles Found: ${result.cycle.length}`);
+            console.log(`Dead Code Files: ${result.insights.UnusedFiles.length}`);
 
-        console.log(`\nHigh Complexity Files: ${highRiskFiles.length}`);
+            section("High Risk Files");
+            const highRiskFiles = Object.entries(result.complexity).filter(([, data]) => data.inCycle == true);
+            highRiskFiles.forEach(([file, data]) => {
+                console.log(`\nFile: ${path.basename(file)}, \n Depth: ${data.depth},\n In Cycle: ${data.inCycle}`);
+            });
 
-        section("Cycles Detected")
-        console.log(`Total Cycles Detected: ${result.cycle.length}`);
-        console.log(`Cycles: ${result.cycle.map(c => c.map(f => path.basename(f)).join(' -> ')).join('\n')}`);
+            console.log(`\nHigh Complexity Files: ${highRiskFiles.length}`);
 
-        section("Depth Analysis");
+            section("Cycles Detected")
+            console.log(`Total Cycles Detected: ${result.cycle.length}`);
+            console.log(`Cycles: ${result.cycle.map(c => c.map(f => path.basename(f)).join(' -> ')).join('\n')}`);
 
-        const table = new Table({
-            head: ["File", "Score", "Depth", "In Cycle", "Imports", "Imported By"],
-        });
+            section("Depth Analysis");
 
-        Object.entries(result.complexity).forEach(([fileName, data]) => {
-            table.push([fileName, data.complexityScore, data.depth, data.inCycle ? "Yes" : "No", data.imports, data.importedBy]);
-        });
+            const table = new Table({
+                head: ["File", "Score", "Depth", "In Cycle", "Imports", "Imported By"],
+            });
 
-        console.log(table.toString());
+            Object.entries(result.complexity).forEach(([fileName, data]) => {
+                table.push([fileName, data.complexityScore, data.depth, data.inCycle ? "Yes" : "No", data.imports, data.importedBy]);
+            });
+
+            console.log(table.toString());
+        }
 
 
     })
+
 program
     .command('dashboard')
     .action(async () => {
@@ -166,11 +189,11 @@ program
         process.on("SIGTERM", cleanup);
     });
 
-
 program
     .command('complexity')
     .argument('<repoPath>')
-    .action((path) => {
+    .option('--json', 'Output results in JSON format')
+    .action((path, options) => {
         const result = loadFiles(path);
 
         section("Complexity Analysis");
@@ -180,13 +203,18 @@ program
             complexityScore: data.complexityScore,
         }));
         console.log(chalk.bold.blue(`Found ${complexity.length} files`));
-        console.table(complexity);
+        if (options.json) {
+            console.log(JSON.stringify(complexity, null, 2));
+        } else {
+            console.table(complexity);
+        }
     })
 
 program
     .command('cycles')
     .argument('<repoPath>')
-    .action((repoPath) => {
+    .option('--json', 'Output results in JSON format')
+    .action((repoPath, options) => {
         const result = loadFiles(repoPath);
 
         section("Cycle Detection");
@@ -198,28 +226,37 @@ program
 
         console.log(chalk.bold.red(`Found ${cycles.length} cycles`));
 
-        cycles.forEach((cycle) => {
-            console.log(`Cycle ${cycle.cycleNumber}: ${cycle.files.join(' -> ')}`);
-        });
-    })
+        if (options.json) {
+            console.log(JSON.stringify(result.cycle, null, 2));
+        } else {
+            cycles.forEach((cycle) => {
+                console.log(`Cycle ${cycle.cycleNumber}: ${cycle.files.join(' -> ')}`);
+            });
+        }
+    });
 
 program
     .command('depth-table')
     .argument('<repoPath>')
-    .action((path) => {
+    .option('--json', 'Output results in JSON format')
+    .action((path, options) => {
         const result = loadFiles(path);
 
         section("Depth Analysis");
 
-        const table = new Table({
-            head: ["File", "Score", "Depth", "In Cycle", "Imports", "Imported By"],
-        });
+        if (options.json) {
+            console.log(JSON.stringify(result.complexity, null, 2));
+        } else {
+            const table = new Table({
+                head: ["File", "Score", "Depth", "In Cycle", "Imports", "Imported By"],
+            });
 
-        Object.entries(result.complexity).forEach(([fileName, data]) => {
-            table.push([fileName, data.complexityScore, data.depth, data.inCycle ? "Yes" : "No", data.imports, data.importedBy]);
-        });
+            Object.entries(result.complexity).forEach(([fileName, data]) => {
+                table.push([fileName, data.complexityScore, data.depth, data.inCycle ? "Yes" : "No", data.imports, data.importedBy]);
+            });
+            console.log(table.toString());
+        }
 
-        console.log(table.toString());
     })
 
 
