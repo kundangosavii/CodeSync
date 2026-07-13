@@ -9,10 +9,10 @@
 }
 
 html.dark {
-  --bg-color: #000000fb;
+  --bg-color: rgba(0, 0, 0, 0.9840);
   --text-color: #f8fafc;
   --bg-gradient:
-    linear-gradient(12deg,rgba(0, 0, 0, 1) 60%, rgba(240, 120, 29, 1) 250%);
+    linear-gradient(0deg,rgba(0, 0, 0, 1) 80%, rgba(240, 120, 29, 1) 250%);
 }
 
 body {
