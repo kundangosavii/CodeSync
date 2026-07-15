@@ -1,0 +1,44 @@
+---
+const features = [
+  {
+    title: "Structural Analysis",
+    desc: "Builds a full dependency graph and reveals how files actually connect.",
+  },
+  {
+    title: "Complexity Insights",
+    desc: "Highlights risky files and scores modules based on impact.",
+  },
+  {
+    title: "Dead Code Detection",
+    desc: "Finds unused files and removes bloat from your codebase.",
+  },
+];
+---
+
+<section class="bg-[#f5f0e9] text-black dark:bg-[#000000] dark:text-white py-20 px-6">
+  <div class="max-w-6xl mx-auto">
+
+    <!-- Heading -->
+    <div class="mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold">
+        Built for understanding, <span class="text-orange-500"> not guessing.</span></h2>
+      <p class="text-gray-700 dark:text-gray-400 mt-4 max-w-2xl">
+        Stop reading files one by one. See structure, dependencies, and complexity
+        across your entire codebase instantly.
+      </p>
+    </div>
+
+    <!-- Cards -->
+    <div class="grid md:grid-cols-3 gap-6">
+      {features.map((item) => (
+        <div class="border border-gray-800 rounded-xl p-6 hover:border-gray-600 transition">
+          <h3 class="text-lg font-medium mb-2">{item.title}</h3>
+          <p class="text-gray-800 dark:text-gray-400 text-sm leading-relaxed">
+            {item.desc}
+          </p>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
