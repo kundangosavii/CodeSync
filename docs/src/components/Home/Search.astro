@@ -1,0 +1,155 @@
+---
+---
+
+<div class="site-search" data-pagefind-ignore>
+	<button 
+	class="search-trigger grid h-8 w-8 place-items-center rounded-full border border-black/10 dark:border-white/10 sm:flex sm:h-auto sm:w-full sm:max-w-xl sm:items-center sm:justify-start sm:gap-3 sm:rounded-lg sm:bg-zinc-100 sm:dark:bg-zinc-900 sm:border-zinc-200 sm:dark:border-zinc-800 sm:px-3.5 sm:py-1.5 text-zinc-500 dark:text-zinc-400 text-sm hover:border-orange-500/80 transition cursor-pointer shrink-0" 
+	type="button"
+	data-search-open 
+	aria-haspopup="dialog"
+	aria-label="Search documentation"
+>
+	
+	<svg class="w-4 h-4 shrink-0 stroke-current" aria-hidden="true" viewBox="0 0 24 24">
+		<path
+			d="m20 20-4.35-4.35m2.35-5.15a7.5 7.5 0 1 1-15 0 7.5 7.5 0 0 1 15 0Z"
+			fill="none"
+			stroke="currentColor"
+			stroke-linecap="round"
+			stroke-width="2"
+		/>
+	</svg>
+
+	
+	<span class="hidden sm:inline-block flex-1 text-left">Search docs...</span>
+
+	
+	<kbd class="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-mono font-medium text-zinc-400 bg-zinc-200 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded">
+		Ctrl K
+	</kbd>
+</button>
+</div>
+
+<dialog 
+	class="search-modal backdrop:bg-black/60 backdrop:backdrop-blur-sm bg-transparent p-0 m-auto max-w-2xl w-[90vw] rounded-2xl shadow-2xl border-0" 
+	data-search-modal 
+	aria-label="Search documentation" 
+	data-pagefind-ignore
+>
+	<div class="search-panel relative bg-[var(--bg-color)] text-[var(--text-color)] border border-zinc-200 dark:border-zinc-800 rounded-2xl p-5 overflow-hidden">
+		
+		<!-- Header with Close (X) Button -->
+		<div class="flex items-center justify-between pb-3 mb-2 border-b border-zinc-200/50 dark:border-zinc-800/50">
+			<span class="text-xs font-semibold tracking-wider text-zinc-400 uppercase">Search CodeSync</span>
+			<button 
+				type="button" 
+				data-search-close 
+				class="text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 text-sm font-semibold px-2 py-1 rounded-md hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-pointer"
+			>
+				✕ ESC
+			</button>
+		</div>
+
+		<!-- Search Container -->
+		<div id="codesync-search" class="min-h-[120px]"></div>
+	</div>
+</dialog>
+
+<style>
+	#codesync-search {
+		--pagefind-ui-primary: #f97316;
+		--pagefind-ui-text: var(--text-color, #171717);
+		--pagefind-ui-background: var(--bg-color, #ffffff);
+		--pagefind-ui-border: rgba(120, 120, 120, 0.2);
+		--pagefind-ui-border-width: 1px;
+		--pagefind-ui-border-radius: 10px;
+		--pagefind-ui-font: inherit;
+	}
+
+	#codesync-search :global(.pagefind-ui__results) {
+		max-height: 50vh;
+		overflow-y: auto;
+		margin-top: 1rem;
+	}
+</style>
+
+<script>
+	const openButton = document.querySelector('[data-search-open]');
+	const closeButton = document.querySelector('[data-search-close]');
+	const modal = document.querySelector('[data-search-modal]') as HTMLDialogElement | null;
+	const panel = modal?.querySelector('.search-panel');
+
+	const base = import.meta.env.BASE_URL || '/';
+	const normalizedBase = base.endsWith('/') ? base.slice(0, -1) : base;
+
+	let initialized = false;
+
+	const initPagefindUI = () =>
+		new Promise<void>((resolve) => {
+			if (initialized) { resolve(); return; }
+
+			const link = document.createElement('link');
+			link.rel = 'stylesheet';
+			link.href = `${normalizedBase}/pagefind/pagefind-ui.css`;
+			document.head.appendChild(link);
+
+			const script = document.createElement('script');
+			script.src = `${normalizedBase}/pagefind/pagefind-ui.js`;
+			script.onload = () => {
+				new (window as unknown as { PagefindUI: new (opts: Record<string, unknown>) => unknown }).PagefindUI({
+					element: '#codesync-search',
+					baseUrl: base,
+					showImages: false,
+					showSubResults: true,
+					placeholder: 'Search CodeSync docs…',
+					excerptLength: 15,
+				});
+				initialized = true;
+				resolve();
+			};
+			script.onerror = () => resolve();
+			document.head.appendChild(script);
+		});
+
+	const openSearch = async () => {
+		if (!modal) return;
+		await initPagefindUI();
+		modal.showModal();
+		requestAnimationFrame(() => {
+			modal.querySelector<HTMLInputElement>('.pagefind-ui__search-input')?.focus();
+		});
+	};
+
+	const closeSearch = () => {
+		if (modal?.open) {
+			modal.close();
+		}
+		if (openButton instanceof HTMLElement) {
+			openButton.focus();
+		}
+	};
+
+	panel?.addEventListener('mousedown', (event) => {
+		event.stopPropagation();
+	});
+
+	modal?.addEventListener('mousedown', (event) => {
+		if (event.target === modal) {
+			closeSearch();
+		}
+	});
+
+
+	openButton?.addEventListener('click', openSearch);
+	closeButton?.addEventListener('click', closeSearch);
+
+	document.addEventListener('keydown', (event) => {
+		if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
+			event.preventDefault();
+			openSearch();
+		}
+		if (event.key === 'Escape' && modal?.open) {
+			closeSearch();
+		}
+	});
+</script>
