@@ -11,5 +11,5 @@ if (docs.length === 0) {
 docs.sort((a, b) => (a.data.order || 0) - (b.data.order || 0));
 
 // FIX: Changed docs[0].slug to docs[0].id
-return Astro.redirect(`/docs/${docs[0].id}`);
+return Astro.redirect(`/docs/getting-started/install`);
 ---
