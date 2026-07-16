@@ -2,6 +2,17 @@
 @plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:where(.dark, .dark *));
+
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/jetbrains-mono";
+@import "@fontsource-variable/geist";
+@import "@fontsource-variable/geist-mono";
+
+@theme {
+  --font-sans: "Geist Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "Geist Mono Variable", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
 :root {
   --bg-color: #f5f0e9;
   --text-color: #040404e3;
@@ -22,12 +33,42 @@ html, body {
   margin: 0;
 }
 
+/* 5. Code & Heading Fine-Tuning for Geist */
+h1, h2, h3, h4, h5, h6 {
+  letter-spacing: -0.03em;
+  font-weight: 600;
+}
+
+code, pre, kbd {
+  font-family: var(--font-mono);
+}
+
+.prose code {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 0.875em;
+  padding: 0.2em 0.4em;
+  border-radius: 6px;
+  background-color: rgba(120, 120, 120, 0.1);
+  border: 1px solid var(--border-color);
+}
+
+.prose pre {
+  font-family: var(--font-mono);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+}
+
 body {
   background-color: var(--bg-color);
   background-image: var(--bg-gradient);
   background-repeat: no-repeat;
   background-attachment: fixed;
   color: var(--text-color);
+  font: var(--font-sans);
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 
   transition: background-image 0.4s ease-in-out;
 }
