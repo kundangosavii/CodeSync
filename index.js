@@ -22,10 +22,10 @@ async function run(repoUrl) {
 
   let repoPath;
 
-  if(repoUrl.includes("github.com")) {
+  if (repoUrl.includes("github.com")) {
     repoPath = await cloneRepo(TARGET_DIR);
   }
-  else{
+  else {
     repoPath = resolved;
   }
 
@@ -62,6 +62,9 @@ async function run(repoUrl) {
 
   impactAnalysis(TARGET_DIR);
 
+
+  const registerPath = path.join(__dirname, "repos", "register.json");
+  
   const date = new Date();
   const dateString = date.toLocaleString();
 
@@ -71,6 +74,36 @@ async function run(repoUrl) {
     return TARGET_DIR.split(path.sep).pop() + "_" + formattedDate.replace(/[:\s]/g, "").replace('pm', "");
   }
 
+  const UniqueId = generateUniqeId();
+  let repoName;
+  if (path.basename(TARGET_DIR).includes(".git")) {
+    repoName = path.basename(TARGET_DIR).replace('.git', '');
+  }
+  else {
+    repoName = path.basename(TARGET_DIR);
+  }
+  const newObj = {
+    repoName: repoName,
+    UniqueId,
+    date: formattedDate,
+    analyzedAt: new Date().toISOString()
+  }
+
+  let data = [];
+  if (fs.existsSync(registerPath)) {
+    const content = fs.readFileSync(registerPath, "utf-8");
+    data = content ? JSON.parse(content) : [];
+  }
+
+  data.push(newObj)
+
+  fs.writeFile(registerPath, JSON.stringify(data, null, 2), (err) => {
+    if (err) {
+      console.error("Error writing to register file:", err);
+    } else {
+      console.log("Successfully wrote to register file.");
+    }
+  });
 
 
   return {

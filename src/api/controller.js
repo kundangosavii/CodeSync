@@ -12,19 +12,6 @@ const analyzeController = (req, res) => {
         const TARGET_DIR = repoUrl;
         const registerPath = path.join(__dirname, "repos", "register.json");
 
-        const date = new Date();
-        const dateString = date.toLocaleString();
-
-        const formattedDate = dateString.split(",")[1].trim();
-
-        const generateUniqeId = () => {
-            if (TARGET_DIR.includes(".git")) {
-                return TARGET_DIR.split('/').pop().replace('.git', '') + "_" + formattedDate.replace(/[:\s]/g, "").replace('pm', "");
-            } else {
-                return TARGET_DIR.split(path.sep).pop() + "_" + formattedDate.replace(/[:\s]/g, "").replace('pm', "");
-            }
-        }
-
         let repoPath;
 
         if (TARGET_DIR.includes(".git")) {
@@ -57,42 +44,11 @@ const analyzeController = (req, res) => {
 
         }
         else {
-            run(repoUrl)
-            const UniqueId = generateUniqeId();
-            let repoName;
-            if (path.basename(TARGET_DIR).includes(".git")) {
-                repoName = path.basename(TARGET_DIR).replace('.git', '');
-            }
-            else {
-                repoName = path.basename(TARGET_DIR);
-            }
-            const newObj = {
-                repoName: repoName,
-                UniqueId,
-                date: formattedDate,
-                analyzedAt: new Date().toISOString()
-            }
-
-            let data = [];
-            if (fs.existsSync(registerPath)) {
-                const content = fs.readFileSync(registerPath, "utf-8");
-                data = content ? JSON.parse(content) : [];
-            }
-
-            data.push(newObj)
-
-            fs.writeFile(registerPath, JSON.stringify(data, null, 2), (err) => {
-                if (err) {
-                    console.error("Error writing to register file:", err);
-                } else {
-                    console.log("Successfully wrote to register file.");
-                }
-            });
-
+            const analysis = run(repoUrl)
 
             res.status(200).json({
                 message: 'Code analysis completed successfully.',
-                UniqueId
+                UniqueId: analysis.UniqueId,
             });
         }
     } catch (error) {
