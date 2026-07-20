@@ -345,5 +345,28 @@ Examples:
 
     })
 
+program
+    .command('set-env')
+    .argument('<String>')
+    .description('Added LLM token in your project')
+    .addHelpText( "after",
+        `
+Examples:
+    code-analyzer set-env "YOUR_HF_TOKEN"
+`)
+    .action((token) => {
+        if (!token) {
+            console.error(chalk.red("Error: Please provide a valid token."));
+            return;
+        }
+
+        const envFilePath = path.join(process.cwd(), '.env');
+        const setEnvVariable = (key, value) => {
+            const fs = require('fs');
+            fs.writeFileSync(envFilePath, `${key}=${value}\n`, { flag: 'a' });
+            console.log(chalk.green(`Successfully set ${key} in .env file.`));
+        };
+        setEnvVariable('HF_TOKEN', token);
+    });
 
 program.parse(process.argv);
