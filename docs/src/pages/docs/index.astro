@@ -9,5 +9,5 @@ if (docs.length === 0) {
 
 docs.sort((a, b) => (a.data.order || 0) - (b.data.order || 0));
 
-return Astro.redirect(`/docs/getting-started/install`);
+return Astro.redirect(`${import.meta.env.BASE_URL}/docs/getting-started/install`);
 ---
