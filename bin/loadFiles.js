@@ -1,10 +1,10 @@
 import fs from 'fs';
 import path from 'path';
 import { __dirname, __filename } from '../config.js';
+import {REPOS_DIR} from '../config.js';
 import { json } from 'stream/consumers';
 
 export function loadFiles(repoPath){
-    const basePath = path.join(__dirname);
     let repoName;
     if(repoPath.includes("github.com")) {
         repoName = repoPath.split('/').pop().replace('.git', '');
@@ -13,7 +13,7 @@ export function loadFiles(repoPath){
         repoName = path.basename(repoPath);
     }
 
-    const targetPath = path.join(basePath, 'repos', repoName);
+    const targetPath = path.join(REPOS_DIR, repoName);
 
     return {
         complexity: JSON.parse(fs.readFileSync(path.join(targetPath, 'complexity.json'), 'utf-8')),
