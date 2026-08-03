@@ -13,7 +13,7 @@ Code Analyzer requires no setup. You can run it instantly using `npx`.
 ## Run the tool
 
 ```bash
-npx code-analyzer
+npx @kundan_gosavi/codesync
 ```
 
 ### What happens when you run it?
@@ -23,7 +23,7 @@ This will:
 - Scan your project directory
 - Analyze dependencies and structure
 - Detect complexity and unused files
-- Launch a local dashboard
+- Show short summery of your project
 
 ---
 
@@ -41,13 +41,13 @@ Make sure your environment meets the following:
 If you prefer running the tool without `npx`, install it globally:
 
 ```bash
-npm install -g code-analyzer
+npm install -g @kundan_gosavi/codesync
 ```
 
 Then run:
 
 ```bash
-code-analyzer
+codesync analyze <RepoPath>
 ```
 
 ---
@@ -57,7 +57,7 @@ code-analyzer
 After running the command, you should see:
 
 - CLI output indicating analysis has started
-- A local dashboard URL (e.g., `http://localhost:3000`)
+- A short summery of your codebase
 
 ---
 

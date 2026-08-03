@@ -13,13 +13,13 @@ Now that Code Analyzer is installed, let’s run your first analysis.
 ## Run the command
 
 ```bash
-npx code-analyzer
+npx @kundan_gosavi/codesync
 ```
 
 You can also analyze a specific folder:
 
 ```bash
-code-analyzer ./src
+codesync ./src
 ```
 
 ---
@@ -32,19 +32,23 @@ When you run the command, Code Analyzer will:
 - Parse JavaScript/TypeScript code
 - Build a dependency graph
 - Detect unused files and complexity
-- Start a local dashboard
+- Show short summery of project
 
 ---
 
 ## Open the dashboard
 
-After analysis completes, you’ll see a URL like:
+After analysis completes, you’ll can run:
 
-```text
-http://localhost:3000
+```bash
+codesync dashboard
 ```
 
-Open it in your browser.
+This will opens a dashboard in browser
+
+```text
+http://localhost:8000
+```
 
 ---
 
