@@ -9,13 +9,13 @@ order: 1
 Analyze a codebase and generate insights.
 
 ```bash
-code-analyzer analyze <repoPath>
+codesync analyze <repoPath>
 ```
 
 ### Example
 
 ```bash
-code-analyzer analyze ./project
+codesync analyze ./project
 ```
 
 ### Options
@@ -37,13 +37,13 @@ code-analyzer analyze ./project
 Run a detailed analysis with extended output.
 
 ```bash
-code-analyzer detail-analysis <repoPath>
+codesync detail-analysis <repoPath>
 ```
 
 ### Example
 
 ```bash
-code-analyzer detail-analysis ./project
+codesync detail-analysis ./project
 ```
 
 ### Options
@@ -64,7 +64,7 @@ code-analyzer detail-analysis ./project
 Start the interactive dashboard.
 
 ```bash
-code-analyzer dashboard
+codesync dashboard
 ```
 
 ### What it does
@@ -84,13 +84,13 @@ Dashboard available at: `http://localhost:5173`
 Analyze complexity scores of files.
 
 ```bash
-code-analyzer complexity <repoPath>
+codesync complexity <repoPath>
 ```
 
 ### Example
 
 ```bash
-code-analyzer complexity ./project
+codesync complexity ./project
 ```
 
 ### Options
@@ -109,13 +109,13 @@ code-analyzer complexity ./project
 Detect circular dependencies.
 
 ```bash
-code-analyzer cycles <repoPath>
+codesync cycles <repoPath>
 ```
 
 ### Example
 
 ```bash
-code-analyzer cycles ./project
+codesync cycles ./project
 ```
 
 ### Options
@@ -134,13 +134,13 @@ code-analyzer cycles ./project
 Generate depth and dependency table.
 
 ```bash
-code-analyzer depth-table <repoPath>
+codesync depth-table <repoPath>
 ```
 
 ### Example
 
 ```bash
-code-analyzer depth-table ./project
+codesync depth-table ./project
 ```
 
 ### Options
@@ -161,16 +161,16 @@ code-analyzer depth-table ./project
 Typical usage flow:
 
 ```bash
-code-analyzer analyze ./project
-code-analyzer dashboard
+codesync analyze ./project
+codesync dashboard
 ```
 
 Or for deeper inspection:
 
 ```bash
-code-analyzer detail-analysis ./project
-code-analyzer cycles ./project
-code-analyzer complexity ./project
+codesync detail-analysis ./project
+codesync cycles ./project
+codesync complexity ./project
 ```
 
 > **Notes:**

@@ -47,9 +47,9 @@ codesync dashboard
 This will opens a dashboard in browser
 
 ```text
-http://localhost:8000
+http://localhost:5173
 ```
-
+<img src="\public\sreenshot_docs\dashboard_blank.png"></img>
 ---
 
 ## What you’ll see
@@ -77,6 +77,7 @@ To understand your codebase better:
 - Follow its dependencies
 - Identify heavily connected modules
 
+<img src="\public\sreenshot_docs\dashboard.png"></img>
 ---
 
 ## Common mistakes

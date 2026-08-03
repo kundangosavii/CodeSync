@@ -25,12 +25,12 @@ Code Analyzer helps you:
 Run instantly using `npx`:
 
 ```bash
-npx code-analyzer
+npx @kundangosavii/codesync
 ```
 OR
 ```bash
-npm install -g code-analyzer
-code-analyzer
+npm install -g @kundangosavi/codesync
+codesync
 ```
 
 ## What it does
@@ -46,7 +46,7 @@ code-analyzer
 Launch the interactive dashboard:
 
 ```bash 
-code-analyzer dashboard
+codesync dashboard
 ```
 <img src="./src/dashboard/public/dashboard.png" alt="Dashboard">
 
@@ -58,17 +58,17 @@ code-analyzer dashboard
 ## Commands
 
 ```bash
-code-analyzer analyze <path>
+codesync analyze <path>
 
-code-analyzer detail-analysis <path>
+codesync detail-analysis <path>
 
-code-analyzer complexity <path>
+codesync complexity <path>
 
-code-analyzer cycles <path>
+codesync cycles <path>
 
-code-analyzer depth-table <path>
+codesync depth-table <path>
 
-code-analyzer dashboard
+codesync dashboard
 ```
 
 Use --json for machine-readable output.

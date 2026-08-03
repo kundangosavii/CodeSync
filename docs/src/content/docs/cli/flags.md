@@ -17,7 +17,7 @@ Output results in JSON format instead of formatted CLI output.
 ### Usage
 
 ```bash
-code-analyzer analyze ./project --json
+codesync analyze ./project --json
 ```
 
 ---
@@ -39,7 +39,7 @@ The `--json` flag is supported in:
 ### Default output
 
 ```bash
-code-analyzer analyze ./project
+codesync analyze ./project
 ```
 
 Shows:
@@ -51,7 +51,7 @@ Shows:
 ### JSON output
 
 ```bash
-code-analyzer analyze ./project --json
+codesync analyze ./project --json
 ```
 
 Returns structured data:

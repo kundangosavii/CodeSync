@@ -11,10 +11,12 @@ The dashboard is where you explore and understand your codebase visually.
 After running:
 
 ```bash
-code-analyzer dashboard
+codesync dashboard
 ```
 
 The dashboard will open in your browser.
+
+
 
 ---
 
