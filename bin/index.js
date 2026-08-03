@@ -34,9 +34,9 @@ program
         "after",
         `
 Examples:
-  code-analyzer analyze ./project
-  code-analyzer cycles ./project --top 3
-  code-analyzer complexity ./project --json
+  codesync analyze ./project
+  codesync cycles ./project --top 3
+  codesync complexity ./project --json
 `
     )
     .action(async (repoPath, options) => {
@@ -108,9 +108,9 @@ program
         "after",
         `
 Examples:
-  code-analyzer analyze ./project
-  code-analyzer cycles ./project --top 3
-  code-analyzer complexity ./project --json
+  codesync analyze ./project
+  codesync cycles ./project --top 3
+  codesync complexity ./project --json
 `
     )
     .action(async (repoPath, options) => {
@@ -185,9 +185,9 @@ program
         "after",
         `
 Examples:
-  code-analyzer analyze ./project
-  code-analyzer cycles ./project --top 3
-  code-analyzer complexity ./project --json
+  codesync analyze ./project
+  codesync cycles ./project --top 3
+  codesync complexity ./project --json
 `
     )
     .action(async () => {
@@ -243,9 +243,9 @@ program
         "after",
         `
 Examples:
-  code-analyzer analyze ./project
-  code-analyzer cycles ./project --top 3
-  code-analyzer complexity ./project --json
+  codesync analyze ./project
+  codesync cycles ./project --top 3
+  codesync complexity ./project --json
 `
     )
     .action((path, options) => {
@@ -279,7 +279,7 @@ program
         "after",
         `
 Examples:
-  code-analyzer cycles ./project --top 3
+  codesync cycles ./project --top 3
 `
     )
     .action((repoPath, options) => {
@@ -316,7 +316,7 @@ program
         "after",
         `
 Examples:
-    code-analyzer depth-table ./project
+    codesync depth-table ./project
 `
     )
     .option('--json', 'Output results in JSON format')
@@ -352,7 +352,7 @@ program
     .addHelpText( "after",
         `
 Examples:
-    code-analyzer set-env "YOUR_HF_TOKEN"
+    codesync set-env "YOUR_HF_TOKEN"
 `)
     .action((token) => {
         if (!token) {
