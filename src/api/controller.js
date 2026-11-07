@@ -1,6 +1,7 @@
 import { run } from '../../index.js';
 import fs from 'node:fs';
 import { __dirname, __filename } from '../../config.js';
+import { REPOS_DIR } from "../../config.js";
 import path from 'path';
 
 import { llmService } from './services/llmService.js';
@@ -23,7 +24,7 @@ const analyzeController = (req, res) => {
 
         console.log("repoPath:", repoPath);
 
-        if (fs.existsSync(`C:/code-analyser/repos/${repoPath}`)) {
+        if (fs.existsSync(`${REPOS_DIR}/${repoPath}`)) {
             console.log("repo already analyzed")
             fs.readFile(registerPath, 'utf-8', (err, data) => {
                 if (err) {
@@ -63,7 +64,7 @@ const getAnalysisTimingController = (req, res, repoId) => {
 
         const repoName = repoId.split("_").slice(0, -1).join("_");
 
-        fs.readFile(`C:/code-analyser/repos/register.json`, 'utf-8', (err, data) => {
+        fs.readFile(`${REPOS_DIR}/register.json`, 'utf-8', (err, data) => {
             if (err) {
                 console.error('Error reading register file:', err);
                 return res.status(500).json({ message: 'An error occurred while fetching analysis timing.' });
@@ -95,7 +96,7 @@ const getInsightsController = (req, res, repoId) => {
 
         const repoName = repoId.split("_").slice(0, -1).join("_");
 
-        fs.readFile(`C:/code-analyser/repos/${repoName}/insights.json`, 'utf-8', (err, data) => {
+        fs.readFile(`${REPOS_DIR}/${repoName}/insights.json`, 'utf-8', (err, data) => {
             if (err) {
                 console.error('Error reading insights file:', err);
                 return res.status(500).json({ message: 'An error occurred while fetching insights.' });
@@ -116,7 +117,7 @@ const getReadableInsightsController = (req, res, repoId) => {
 
         const repoName = repoId.split("_").slice(0, -1).join("_");
 
-        fs.readFile(`C:/code-analyser/repos/${repoName}/readableInsights.txt`, 'utf-8', (err, data) => {
+        fs.readFile(`${REPOS_DIR}/${repoName}/readableInsights.txt`, 'utf-8', (err, data) => {
             if (err) {
                 console.error('Error reading Readable insights file:', err);
                 return res.status(500).json({ message: 'An error occurred while fetching readable insights.' });
@@ -137,7 +138,7 @@ const getGraphController = (req, res, repoId) => {
 
         const repoName = repoId.split("_").slice(0, -1).join("_");
 
-        fs.readFile(`C:/code-analyser/repos/${repoName}/graph.json`, 'utf-8', (err, data) => {
+        fs.readFile(`${REPOS_DIR}/${repoName}/graph.json`, 'utf-8', (err, data) => {
             if (err) {
                 console.error('Error reading Graph file:', err);
                 return res.status(500).json({ message: 'An error occurred while fetching graph data.' });
@@ -159,7 +160,7 @@ const getGraphWithNodeAndEdgeController = (req, res, repoId) => {
 
         const repoName = repoId.split("_").slice(0, -1).join("_");
 
-        fs.readFile(`C:/code-analyser/repos/${repoName}/graphNodesEdges.json`, 'utf-8', (err, data) => {
+        fs.readFile(`${REPOS_DIR}/${repoName}/graphNodesEdges.json`, 'utf-8', (err, data) => {
             if (err) {
                 console.error('Error reading Graph file:', err);
                 return res.status(500).json({ message: 'An error occurred while fetching graph data.' });
@@ -181,7 +182,7 @@ const getImpactAnalysisController = (req, res) => {
 
         const repoName = repoId.split("_").slice(0, -1).join("_");
 
-        fs.readFile(`C:/code-analyser/repos/${repoName}/impactAnalysis.json`, 'utf-8', (err, data) => {
+        fs.readFile(`${REPOS_DIR}/${repoName}/impactAnalysis.json`, 'utf-8', (err, data) => {
             if (err) {
                 console.error('Error reading Impact Analysis file:', err);
                 return res.status(500).json({ message: 'An error occurred while fetching impact analysis data.' });
@@ -205,7 +206,7 @@ const getDeadCodeController = (req, res) => {
 
         const repoName = repoId.split("_").slice(0, -1).join("_");
 
-        fs.readFile(`C:/code-analyser/repos/${repoName}/insights.json`, 'utf-8', (err, data) => {
+        fs.readFile(`${REPOS_DIR}/${repoName}/insights.json`, 'utf-8', (err, data) => {
             if (err) {
                 console.error('Error reading Dead Code file:', err);
                 return res.status(500).json({ message: 'An error occurred while fetching dead code data.' });
@@ -232,7 +233,7 @@ const getComplexityController = (req, res) => {
 
         const repoName = repoId.split("_").slice(0, -1).join("_");
 
-        fs.readFile(`C:/code-analyser/repos/${repoName}/complexity.json`, 'utf-8', (err, data) => {
+        fs.readFile(`${REPOS_DIR}/${repoName}/complexity.json`, 'utf-8', (err, data) => {
             if (err) {
                 console.error('Error reading Complexity file:', err);
                 return res.status(500).json({ message: 'An error occurred while fetching complexity data.' });
@@ -257,8 +258,8 @@ const getAIInsightsController = async (req, res) => {
 
         const repoName = repoId.split("_").slice(0, -1).join("_");
 
-        if (fs.existsSync(`C:/code-analyser/repos/${repoName}/aiInsights.json`)) {
-            const insightsContent = fs.readFileSync(`C:/code-analyser/repos/${repoName}/aiInsights.json`, 'utf8');
+        if (fs.existsSync(`${REPOS_DIR}/${repoName}/aiInsights.json`)) {
+            const insightsContent = fs.readFileSync(`${REPOS_DIR}/${repoName}/aiInsights.json`, 'utf8');
             const insightsData = JSON.parse(insightsContent);
 
             return res.status(200).json({
@@ -267,18 +268,18 @@ const getAIInsightsController = async (req, res) => {
             });
         }
         else {
-            const insightsContent = fs.readFileSync(`C:/code-analyser/repos/${repoName}/insights.json`, 'utf8');
+            const insightsContent = fs.readFileSync(`${REPOS_DIR}/${repoName}/insights.json`, 'utf8');
             const insightsData = JSON.parse(insightsContent);
             const deadcode = insightsData.UnusedFiles
 
 
-            const cyclesContent = fs.readFileSync(`C:/code-analyser/repos/${repoName}/cycle.json`, 'utf8');
+            const cyclesContent = fs.readFileSync(`${REPOS_DIR}/${repoName}/cycle.json`, 'utf8');
             const cycles = JSON.parse(cyclesContent);
 
-            const complexityContent = fs.readFileSync(`C:/code-analyser/repos/${repoName}/complexity.json`, 'utf8');
+            const complexityContent = fs.readFileSync(`${REPOS_DIR}/${repoName}/complexity.json`, 'utf8');
             const complexity = JSON.parse(complexityContent);
 
-            const impactContent = fs.readFileSync(`C:/code-analyser/repos/${repoName}/impactAnalysis.json`, 'utf8');
+            const impactContent = fs.readFileSync(`${REPOS_DIR}/${repoName}/impactAnalysis.json`, 'utf8');
             const impact = JSON.parse(impactContent);
 
             const analysisData = {
@@ -290,7 +291,7 @@ const getAIInsightsController = async (req, res) => {
 
             const data = await llmService(analysisData);
 
-            fs.writeFileSync(`C:/code-analyser/repos/${repoName}/aiInsights.json`, JSON.stringify(data, null, 2), 'utf8');
+            fs.writeFileSync(`${REPOS_DIR}/${repoName}/aiInsights.json`, JSON.stringify(data, null, 2), 'utf8');
 
 
             res.status(200).json({
@@ -304,13 +305,14 @@ const getAIInsightsController = async (req, res) => {
         res.status(500).json({ message: 'An error occurred while fetching AI insights.' });
     }
 };
-
 const getReposController = (req, res) => {
     try {
-        const registerPath = path.join(__dirname, "repos", "register.json");
+        const registerPath = path.join(REPOS_DIR, "register.json");
 
         if (fs.existsSync(registerPath)) {
+
             const content = fs.readFileSync(registerPath, "utf-8");
+
             const data = content ? JSON.parse(content) : [];
 
             res.status(200).json(
@@ -319,14 +321,21 @@ const getReposController = (req, res) => {
                     name: r.repoName
                 }))
             );
+
         } else {
-            res.status(404).json({ message: 'Register file not found.' });
+
+            res.status(200).json([]); // better than 404
+
         }
+
     } catch (error) {
-        console.error('Error fetching Repos:', error);
-        res.status(500).json({ message: 'An error occurred while fetching Repos.' });
+        console.error("Error fetching Repos:", error);
+
+        res.status(500).json({
+            message: "An error occurred while fetching Repos."
+        });
     }
-}
+};
 export {
     analyzeController,
     getInsightsController,

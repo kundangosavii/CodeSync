@@ -7,6 +7,7 @@
     "boxen": "^8.0.1",
     "chalk": "^5.6.2",
     "cli-table3": "^0.6.5",
+    "codesync": "file:codesync-1.0.0.tgz",
     "commander": "^15.0.0",
     "concurrently": "^10.0.3",
     "dotenv": "^17.4.2",
@@ -22,26 +23,46 @@
     "tailwindcss": "^4.3.1",
     "wait-on": "^9.0.10"
   },
-  "name": "code-analyser",
+  "name": "@kundan_gosavi/codesync",
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",
   "directories": {
     "doc": "docs"
   },
-  "scripts": {
-    "dev": "node src/api/app.js"
+  "bin": {
+    "codesync": "./bin/index.js"
   },
+  "scripts": {
+    "dev": "node src/api/app.js",
+    "start": "node bin/index.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "bin",
+    "src",
+    "index.js",
+    "config.js"
+  ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kundangosavii/code-analyzer.git"
+    "url": "git+https://github.com/kundangosavii/CodeSync.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "code-analysis",
+    "dependency-analysis",
+    "architecture",
+    "javascript",
+    "typescript",
+    "cli"
+  ],
+  "author": "Kundan N. Gosavi",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/kundangosavii/code-analyzer/issues"
+    "url": "https://github.com/kundangosavii/CodeSync/issues"
   },
-  "homepage": "https://github.com/kundangosavii/code-analyzer#readme",
-  "description": ""
+  "homepage": "https://github.com/kundangosavii/CodeSync#readme",
+  "description": "CLI tool for analyzing codebase architecture, dependencies, complexity and risks"
 }

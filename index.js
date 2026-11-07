@@ -1,5 +1,6 @@
 import path from "path";
 import { __dirname, __filename } from './config.js';
+import {REPOS_DIR} from './config.js'
 import fs from "node:fs";
 
 import { getAllFiles } from "./src/core/fileLoader.js";
@@ -63,7 +64,7 @@ async function run(repoUrl) {
   impactAnalysis(TARGET_DIR);
 
 
-  const registerPath = path.join(__dirname, "repos", "register.json");
+  const registerPath = path.join(REPOS_DIR, "register.json");
   
   const date = new Date();
   const dateString = date.toLocaleString();

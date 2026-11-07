@@ -2,16 +2,14 @@ import simpleGit from 'simple-git';
 import path from 'path';
 import fs from 'fs';
 import { __dirname, __filename } from '../../config.js';
+import { REPOS_DIR } from "../../config.js";
 
 const git = simpleGit();
 
-const basePath = __dirname
-
-const newRepo = path.join(basePath, 'cloneRepos')
 
 async function cloneRepo(repoUrl) {
     const repoName = repoUrl.split('/').pop().replace('.git', '');
-    const targetPath = path.join(newRepo, repoName);
+    const targetPath = path.join(REPOS_DIR, repoName);
 
     if (fs.existsSync(targetPath)) {
         console.log(`Repo already exists at ${targetPath}, skipping clone.`);

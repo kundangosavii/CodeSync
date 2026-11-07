@@ -1,6 +1,10 @@
+#!/usr/bin/env node
+
+
 import { Command } from 'commander';
 import chalk from 'chalk';
 import path from 'path';
+import fs from 'fs';
 import { spawn } from "child_process";
 import waitOn from "wait-on";
 import open from "open";
@@ -362,7 +366,6 @@ Examples:
 
         const envFilePath = path.join(process.cwd(), '.env');
         const setEnvVariable = (key, value) => {
-            const fs = require('fs');
             fs.writeFileSync(envFilePath, `${key}=${value}\n`, { flag: 'a' });
             console.log(chalk.green(`Successfully set ${key} in .env file.`));
         };

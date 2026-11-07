@@ -1,50 +1,38 @@
 import fs from 'node:fs'
 import path from 'path'
 import { __dirname, __filename } from '../../config.js';
+import { REPOS_DIR } from '../../config.js'
 
 const basePath = __dirname
 
-const newRepo = path.join(basePath, 'repos')
+const newRepo = REPOS_DIR
 
 function saveGraph(TARGET_DIR, graph) {
 
     try {
-        if (path.basename(TARGET_DIR).includes(".git")){
-            TARGET_DIR = TARGET_DIR.split('/').pop().replace('.git', '');
-        }
-        else{
-            TARGET_DIR = path.basename(TARGET_DIR);
-        }
-        const repoPath = path.join(newRepo, TARGET_DIR)
-        const fullRepoPath = path.join(repoPath, 'graph.json')
+        let repoName;
 
-        if (!fs.existsSync(repoPath)) {
-            fs.mkdir(repoPath, { recursive: true }, (err) => {
-                if (err) {
-                    console.error('Error creating directory:', err);
-                } else {
-                    console.log('Directory created successfully!');
-                }
-            });
+        if (path.basename(TARGET_DIR).includes(".git")) {
+            repoName = TARGET_DIR.split('/').pop().replace('.git', '');
         } else {
-            console.log('Directory already exists. Using existing directory...');
+            repoName = path.basename(TARGET_DIR);
         }
-        if (fs.existsSync(fullRepoPath)) {
-            console.log('File already exists. Overwriting...');
-        } else {
-            fs.writeFile(fullRepoPath, JSON.stringify(graph, null, 2), (err) => {
-                if (err) {
-                    console.error('Error writing file:', err);
-                } else {
-                    console.log('Results saved successfully!');
-                }
-            });
-        }
+
+        const repoPath = path.join(REPOS_DIR, repoName);
+        const fullRepoPath = path.join(repoPath, "graph.json");
+
+        fs.mkdirSync(repoPath, { recursive: true });
+
+        fs.writeFileSync(
+            fullRepoPath,
+            JSON.stringify(graph, null, 2)
+        );
+
+        console.log("Graph saved at:", fullRepoPath);
 
     } catch (error) {
-        console.error('Error saving results:', error);
+        console.error("Error saving results:", error);
     }
-
 }
 
 function saveInsights(TARGET_DIR, insights) {

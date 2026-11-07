@@ -1,11 +1,12 @@
 import path from 'path';
 import fs from 'fs';
 import { __dirname, __filename } from '../../config.js';
+import { REPOS_DIR } from '../../config.js'
 
 import { getIndirectImpact } from './dfsAnalysis.js';
 
 
-const newRepo = path.join(__dirname, 'repos')
+const newRepo = REPOS_DIR
 
 function impactAnalysis(TARGET_DIR) {
 
